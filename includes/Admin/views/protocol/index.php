@@ -1,6 +1,6 @@
 <div class="sp-heading d-flex justify-content-between align-items-end">
 	<div>
-		<h2 class="page-heading"><?php echo _e( 'New Protocol', 'sponsor' ); ?> </h2>
+		<h2 class="page-heading"><?php _e( 'Protocol ', 'sponsor' ); ?> </h2>
 		<p class="m-0"><?php echo _e( 'Add entry protocol requirements and thresholds', 'sponsor' ); ?></p>
 	</div>
 </div>

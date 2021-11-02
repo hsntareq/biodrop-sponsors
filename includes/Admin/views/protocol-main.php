@@ -53,7 +53,7 @@
 					include __DIR__ . '/protocol/new.php';
 					break;
 				case 'protocol':
-					include __DIR__ . '/protocol/edit.php';
+					include __DIR__ . '/protocol/index.php';
 					break;
 				case 'settings':
 					include __DIR__ . '/settings.php';
