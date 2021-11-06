@@ -17,7 +17,8 @@ class Assets {
 	 * @return void
 	 */
 	public function __construct() {
-		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		// add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'theme_scripts' ) );
 		add_action( 'admin_init', array( $this, 'admin_bootstrap_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_meta_data' ) );
 
@@ -69,6 +70,15 @@ class Assets {
 		wp_enqueue_style( 'sponsor-bootstrap', sponsor()->url . 'assets/css/bootstrap.min.css', array(), sponsor()->version );
 	}
 
+	public function theme_scripts() {
+		wp_enqueue_style( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/css/bootstrap.min.css', array(), sponsor()->version );
+		wp_enqueue_style( 'sponsor-theme-fontawesome', sponsor()->url . 'assets/css/fontawesome/all.css', array(), sponsor()->version );
+		wp_enqueue_style( 'sponsor-theme-admin', sponsor()->url . 'assets/css/sponsor.css', array(), sponsor()->version );
+		wp_enqueue_script( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/js/bootstrap.bundle.min.js', array(), sponsor()->version, true );
+		wp_enqueue_script( 'sponsor-theme-lib', sponsor()->url . 'assets/js/lib.js', array(), sponsor()->version, true );
+		wp_enqueue_script( 'sponsor-theme-admin', sponsor()->url . 'assets/js/sponsor.js', array(), sponsor()->version, true );
+	}
+
 	public function admin_scripts() {
 		wp_enqueue_style( 'sponsor-fontawesome', sponsor()->url . 'assets/css/fontawesome/all.css', array(), sponsor()->version );
 		// wp_enqueue_style( 'sponsor-select2', sponsor()->url . 'assets/css/select2.min.css', array(), sponsor()->version );
@@ -79,16 +89,6 @@ class Assets {
 		// wp_enqueue_script( 'sponsor-select2', sponsor()->url . 'assets/js/select2.min.js', array( 'jquery' ), sponsor()->version, true );
 		wp_enqueue_script( 'sponsor-lib', sponsor()->url . 'assets/js/lib.js', array(), sponsor()->version, true );
 		wp_enqueue_script( 'sponsor-admin', sponsor()->url . 'assets/js/sponsor.js', array(), sponsor()->version, true );
-
-		// wp_enqueue_media();
-
-		/*
-		 wp_enqueue_script( 'sponsor-admin', sponsor()->url . 'assets/js/sponsor-admin.js', array(), sponsor()->version, true );
-
-		$sponsor_localize_data = $this->get_default_localized_data();
-
-		$sponsor_localize_data = apply_filters( 'sponsor_localize_data', $sponsor_localize_data );
-		wp_localize_script( 'sponsor-admin', '_sponsorobject', $sponsor_localize_data ); */
 
 	}
 

@@ -1,10 +1,11 @@
-@import './default';
-
+@import "./default";
 
 .sp-preset {
-    .preset-item{
-        .btn-check{
-            
-        }
+  .preset-item {
+    .btn-check {
+      &:hover {
+        text-decoration: none;
+      }
     }
+  }
 }

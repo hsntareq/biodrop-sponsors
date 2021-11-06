@@ -1,5 +1,51 @@
 <?php
 
+function sponsor_no_admin_access() {
+	$redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
+	global $current_user;
+	$user_roles = $current_user->roles;
+	$user_role  = array_shift( $user_roles );
+
+	if ( $user_role === 'sponsor' ) {
+		exit( wp_redirect( $redirect ) );
+	}
+}
+
+add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
+
+
+
+function site_custom_endpoint( $wp_rewrite ) {
+	$feed_rules = array(
+		'bs-admin/?$' => 'index.php?page=sponsor',
+	);
+
+	$wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
+	return $wp_rewrite->rules;
+}
+
+add_filter( 'generate_rewrite_rules', 'site_custom_endpoint' );
+
+
+add_filter( 'template_include', 'sponsors_admin_page_template', 1000, 1 );
+function sponsors_admin_page_template( $template ) {
+
+	$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
+
+	if ( is_user_logged_in() ) {
+		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
+	} else {
+		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
+	}
+
+	if ( file_exists( $admin_template ) ) {
+		$template = $admin_template;
+	}
+
+	return $template;
+}
+
+
 /**
  * Function sp_po_insert_protocol
  *

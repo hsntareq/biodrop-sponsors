@@ -67,8 +67,29 @@ class SponsorForm {
 		add_action( 'wp_ajax_get_protocol_by_id', array( $this, 'get_protocol_by_id' ) );
 		add_action( 'wp_ajax_get_selected_protocol', array( $this, 'get_selected_protocol' ) );
 		add_action( 'wp_ajax_get_protocol_by_name', array( $this, 'get_protocol_by_name' ) );
+		add_filter( 'author_template', array( $this, 'author_role_template' ) );
 
 	}
+
+	function author_role_template( $templates = '' ) {
+		$author = get_queried_object();
+		$role   = $author->roles[0];
+		$role   = 'sponsor';
+
+		if ( ! is_array( $templates ) && ! empty( $templates ) ) {
+			$templates = locate_template( array( "author-$role.php", $templates ), false );
+		} elseif ( empty( $templates ) ) {
+			$templates = locate_template( 'author-sponsor.php', false );
+		} else {
+			$new_template = locate_template( array( "author-$role.php" ) );
+
+			if ( ! empty( $new_template ) ) {
+				array_unshift( $templates, $new_template );
+			}
+		}
+		return $templates;
+	}
+
 
 	public function get_protocols() {
 		global $wpdb;

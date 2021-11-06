@@ -334,4 +334,8 @@ select.form-control {
   display: none !important;
 }
 
+.sp-preset .preset-item .btn-check:hover {
+  text-decoration: none;
+}
+
 /*# sourceMappingURL=sponsor.css.map */
