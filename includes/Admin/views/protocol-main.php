@@ -26,12 +26,12 @@
 	<div class="sp-main p-5 row g-0">
 		<div class="sp-nav col-3 shadow">
 			<div class="list-group list-group-flush">
-				<a href="<?php echo esc_url( get_url( 'protocol' ) ); ?>"
+				<a href="<?php echo esc_url( get_sp_admin_url( 'protocol' ) ); ?>"
 					class="list-group-item list-group-item-action<?php echo esc_attr( get_active( 'protocol' ) ); ?>">
 					<i class="far fa-shield-check"></i>
 					<?php echo esc_html( 'Protocol' ); ?>
 				</a>
-				<a href="<?php echo esc_url( get_url( 'settings' ) ); ?>"
+				<a href="<?php echo esc_url( get_sp_admin_url( 'settings' ) ); ?>"
 					class="list-group-item list-group-item-action<?php echo esc_attr( get_active( 'settings' ) ); ?>">
 					<i class="far fa-cog"></i>
 					<?php echo esc_html( 'Settings' ); ?>

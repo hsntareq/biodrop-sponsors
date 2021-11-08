@@ -57,9 +57,9 @@ final class SponsorPortal {
 		$login_action = get_request( 'action' );
 		if ( ( strtolower( $pagenow ) == 'wp-login.php' ) && ( strtolower( $login_action ) == 'register' ) ) {
 
-			include SPONSOR_PATH . '/templates/sponsor-registration-template.php';
+			// include SPONSOR_PATH . '/templates/sponsor-registration-template.php';
 
-			// wp_redirect( home_url( '/sponsor-registration' ) );
+			wp_redirect( home_url( '/bs-register' ) );
 		}
 	}
 	/**
@@ -236,7 +236,7 @@ if ( ! function_exists( 'sponsor' ) ) {
 			'version'                => SPONSOR_VERSION,
 			'nonce_action'           => 'sponsor_nonce_action',
 			'nonce'                  => '_sponsor_nonce',
-			'template_path'          => apply_filters( 'sponsor_template_path', 'sponsor/' ),
+			'template_path'          => apply_filters( 'sponsor_template_path', SPONSOR_DIR_PATH . 'includes/template/' ),
 		);
 
 		return (object) $info;

@@ -40,7 +40,7 @@ if ( isset( $protocol_edit ) && null !== $protocol_edit ) :
 			</button>
 		</div>
 
-		<a href="<?php echo esc_url( get_url( 'protocol-new' ) ); ?>"
+		<a href="<?php echo esc_url( get_sp_admin_url( 'protocol-new' ) ); ?>"
 			class="btn btn-success text-nowrap" data-bs-toggle="tooltip" title="Click here to create a new protocol">
 			<i class="fa fa-plus me-2"></i>
 			<?php echo esc_html( 'New Protocol' ); ?>
@@ -124,7 +124,7 @@ if ( isset( $protocol_edit ) && null !== $protocol_edit ) :
 <?php elseif ( null == $edit_id ) : ?>
 		<div class="input-group">
 			<span class="input-group-text"><?php echo __( 'Click here to create new protocol:', 'textdomain' ); ?></span>
-			<a href="<?php echo esc_url( get_url( 'protocol-new' ) ); ?>"
+			<a href="<?php echo esc_url( get_sp_admin_url( 'protocol-new' ) ); ?>"
 				class="btn btn-success text-nowrap" data-bs-toggle="tooltip" title="Click here to create a new protocol">
 				<i class="fa fa-plus me-2"></i>
 				<?php echo esc_html( 'New Protocol' ); ?>

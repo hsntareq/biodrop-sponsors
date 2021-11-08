@@ -218,14 +218,14 @@ if (saveProtocol) {
   };
 }
 
-const updateProtocol = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.singleElement)("#update_protocol");
-const update_id = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.singleElement)("#select_protocol").value;
+const updateProtocol = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.singleElement)("#update_protocol"); // const update_id = singleElement("#select_protocol");
+// update_id = update_id.value;
 
 if (updateProtocol) {
   updateProtocol.onclick = e => {
     var formData = new FormData(protocolForm);
-    formData.append("action", "update_protocol");
-    formData.append("protocol_id", update_id);
+    formData.append("action", "update_protocol"); // formData.append("protocol_id", update_id);
+
     formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
     const xhttp = new XMLHttpRequest();
     xhttp.open("POST", _appObject.ajaxUrl, true);
@@ -246,12 +246,11 @@ if (updateProtocol) {
   };
 }
 
-const deleteProtocol = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.singleElement)("#delete_protocol");
-const delete_id = deleteProtocol.dataset.id;
+const deleteProtocol = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.singleElement)("#delete_protocol"); // const delete_id = deleteProtocol.dataset.id;
 
 if (deleteProtocol) {
   deleteProtocol.onclick = e => {
-    if (confirm("Are you sure you want to " + delete_id + " from the database?")) {
+    if (confirm("Are you sure you want to  from the database?")) {
       var formData = new FormData();
       formData.append("action", "delete_protocol");
       formData.append("protocol_id", update_id);

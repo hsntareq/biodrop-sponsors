@@ -17,7 +17,7 @@ class Assets {
 	 * @return void
 	 */
 	public function __construct() {
-		// add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
 		add_action( 'wp_enqueue_scripts', array( $this, 'theme_scripts' ) );
 		add_action( 'admin_init', array( $this, 'admin_bootstrap_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_meta_data' ) );
@@ -71,12 +71,16 @@ class Assets {
 	}
 
 	public function theme_scripts() {
-		wp_enqueue_style( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/css/bootstrap.min.css', array(), sponsor()->version );
-		wp_enqueue_style( 'sponsor-theme-fontawesome', sponsor()->url . 'assets/css/fontawesome/all.css', array(), sponsor()->version );
-		wp_enqueue_style( 'sponsor-theme-admin', sponsor()->url . 'assets/css/sponsor.css', array(), sponsor()->version );
-		wp_enqueue_script( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/js/bootstrap.bundle.min.js', array(), sponsor()->version, true );
-		wp_enqueue_script( 'sponsor-theme-lib', sponsor()->url . 'assets/js/lib.js', array(), sponsor()->version, true );
-		wp_enqueue_script( 'sponsor-theme-admin', sponsor()->url . 'assets/js/sponsor.js', array(), sponsor()->version, true );
+		global $wp;
+		$allowed_urls = array( 'bs-admin', 'bs-login', 'bs-register' );
+		if ( in_array( $wp->request, $allowed_urls ) ) {
+			wp_enqueue_style( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/css/bootstrap.min.css', array(), sponsor()->version );
+			wp_enqueue_style( 'sponsor-theme-fontawesome', sponsor()->url . 'assets/css/fontawesome/all.css', array(), sponsor()->version );
+			wp_enqueue_style( 'sponsor-theme-admin', sponsor()->url . 'assets/css/sponsor.css', array(), sponsor()->version );
+			wp_enqueue_script( 'sponsor-theme-bootstrap', sponsor()->url . 'assets/js/bootstrap.bundle.min.js', array(), sponsor()->version, true );
+			wp_enqueue_script( 'sponsor-theme-lib', sponsor()->url . 'assets/js/lib.js', array(), sponsor()->version, true );
+			wp_enqueue_script( 'sponsor-theme-admin', sponsor()->url . 'assets/js/sponsor.js', array(), sponsor()->version, true );
+		}
 	}
 
 	public function admin_scripts() {

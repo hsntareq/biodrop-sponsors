@@ -3,39 +3,43 @@
 function sponsor_no_admin_access() {
 	$redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
 	global $current_user;
-	$user_roles = $current_user->roles;
-	$user_role  = array_shift( $user_roles );
-
-	if ( $user_role === 'sponsor' ) {
+	if ( in_array( 'sponsor', $current_user->roles ) ) {
 		exit( wp_redirect( $redirect ) );
 	}
 }
 
-add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
-
-
-
-function site_custom_endpoint( $wp_rewrite ) {
-	$feed_rules = array(
-		'bs-admin/?$' => 'index.php?page=sponsor',
-	);
-
-	$wp_rewrite->rules = $feed_rules + $wp_rewrite->rules;
-	return $wp_rewrite->rules;
+function current_username() {
+	global $current_user;
+	return $current_user->display_name;
 }
 
-add_filter( 'generate_rewrite_rules', 'site_custom_endpoint' );
+add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
+
+add_action( 'init', 'sponsor_admin_access', 100 );
+function sponsor_admin_access() {
+	global $current_user;
+	if ( in_array( 'sponsor', $current_user->roles ) ) {
+		add_filter( 'show_admin_bar', '__return_false' );
+	}
+}
+
 
 
 add_filter( 'template_include', 'sponsors_admin_page_template', 1000, 1 );
 function sponsors_admin_page_template( $template ) {
-
-	$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
-
+	global $wp;
 	if ( is_user_logged_in() ) {
 		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
 	} else {
-		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
+		$allowed_urls = array( 'bs-login', 'bs-register' );
+		if ( ! in_array( $wp->request, $allowed_urls ) ) {
+			wp_redirect( site_url( 'bs-login' ) );
+		}
+		if ( $wp->request == 'bs-register' ) {
+			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-register.php';
+		} elseif ( $wp->request == 'bs-login' ) {
+			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
+		}
 	}
 
 	if ( file_exists( $admin_template ) ) {
@@ -45,7 +49,12 @@ function sponsors_admin_page_template( $template ) {
 	return $template;
 }
 
-
+function sp_header() {
+	require sponsor()->path . 'includes/header-custom.php';
+}
+function sp_footer() {
+	require sponsor()->path . 'includes/footer-custom.php';
+}
 /**
  * Function sp_po_insert_protocol
  *
@@ -140,7 +149,7 @@ function get_result( $key ) {
 function get_server( $key ) {
 	return isset( $_SERVER[ $key ] ) ? $_SERVER[ $key ] : false;
 }
-function get_url( $nav_slug ) {
+function get_sp_admin_url( $nav_slug ) {
 	return add_query_arg(
 		array(
 			'page' => 'sponsor',
@@ -149,9 +158,17 @@ function get_url( $nav_slug ) {
 		admin_url( 'admin.php' )
 	);
 }
+function get_nav_url( $nav_slug ) {
+	return add_query_arg(
+		array(
+			'page' => $nav_slug,
+		),
+		site_url( 'bs-admin' )
+	);
+}
 
 function get_active( $key ) {
-	return $key === get_request( 'nav' ) ? ' active' : null;
+	return $key === get_request( 'page' ) ? ' active' : null;
 }
 if ( ! function_exists( 'get_current_url' ) ) {
 
@@ -193,3 +210,23 @@ if ( ! function_exists( 'vr' ) ) {
 }
 
 
+add_action( 'wp_enqueue_scripts', 'remove_default_stylesheet', 20 );
+function remove_default_stylesheet() {
+	wp_dequeue_style( 'wp-block-library' );
+	wp_dequeue_style( 'twenty-twenty-one-style' );
+	wp_dequeue_style( 'twenty-twenty-one-print-style' );
+	// wp_dequeue_script( 'sponsor-theme-admin' );
+	// wp_deregister_style( 'original-register-stylesheet-handle' );
+}
+
+
+add_action( 'init', 'custom_login' );
+function custom_login() {
+	global $pagenow;
+	if ( 'wp-login.php' == $pagenow ) {
+		wp_redirect( site_url( 'bs-login' ) );
+	}
+	if ( 'wp-login.php' == $pagenow ) {
+		// wp_redirect( site_url( 'bs-login' ) );
+	}
+}
