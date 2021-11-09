@@ -15,7 +15,7 @@
 			<div class="container">
 				<div class="row g-5">
 					<div class="col-3">
-						<div class="bs-nav shadow">
+						<div class="bs-nav shadow-sm">
 							<div class="list-group list-group-flush">
 								<a href="<?php echo esc_url( get_nav_url( 'entry' ) ); ?>"
 									class="list-group-item list-group-item-action<?php echo esc_attr( get_active( 'entry' ) ); ?>">
@@ -80,7 +80,7 @@
 		</div>
 
 		<footer class="text-center bg-dark bg-opacity-75 text-white">
-			<p class="fw-lighter fs-6 mb-0 py-1">Copyright &copy; 2021 Biodrop Backoffice</p>
+			<p class="fw-lighter fs-6 mb-0 py-1">Copyright &copy; <?php echo date( 'Y' ); ?> Biodrop Backoffice</p>
 		</footer>
 	</main>
 <?php sp_footer(); ?>

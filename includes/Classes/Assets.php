@@ -21,19 +21,20 @@ class Assets {
 		add_action( 'wp_enqueue_scripts', array( $this, 'theme_scripts' ) );
 		add_action( 'admin_init', array( $this, 'admin_bootstrap_init' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'load_meta_data' ) );
+		add_action( 'wp_enqueue_scripts', array( $this, 'load_theme_meta_data' ) );
 
 	}
 
 
+	public function load_theme_meta_data() {
+		$localize_data = apply_filters( 'sponsor_localize_data', $this->get_default_localized_data() );
+		wp_localize_script( 'sponsor-theme-admin', '_appObject', $localize_data );
+	}
+
 	public function load_meta_data() {
-		// Localize scripts
 		$localize_data = apply_filters( 'sponsor_localize_data', $this->get_default_localized_data() );
 		wp_localize_script( 'sponsor-admin', '_appObject', $localize_data );
 		wp_localize_script( 'sponsor-builder', '_appObject', $localize_data );
-
-		// Inline styles
-		// wp_add_inline_style( 'sponsor-frontend', $this->load_color_palette() );
-		// wp_add_inline_style( 'sponsor-admin', $this->load_color_palette() );
 	}
 
 

@@ -61,7 +61,7 @@ class SponsorForm {
 
 		add_action( 'admin_init', array( $this, 'add_capability' ) );
 		// add_action( 'admin_init', array( $this, 'sponsor_user_settings' ) );
-		add_action( 'wp_ajax_save_protocol', array( $this, 'save_protocol' ) );
+		// add_action( 'wp_ajax_save_protocol', array( $this, 'save_protocol' ) );
 		add_action( 'wp_ajax_update_protocol', array( $this, 'update_protocol' ) );
 		add_action( 'wp_ajax_delete_protocol', array( $this, 'delete_protocol' ) );
 		add_action( 'wp_ajax_get_protocol_by_id', array( $this, 'get_protocol_by_id' ) );
@@ -148,13 +148,16 @@ class SponsorForm {
 	 *
 	 * @return array
 	 */
-	public function save_protocol() {
+	public function save_protocolX() {
 
 		global $wpdb;
-		$tablename = $wpdb->prefix . 'sp_protocol';
-		$fields    = array( 'type', 'name', 'mrna_first_injection', 'mrna_second_injection', 'mrna_twentyone_days_since_second_injection', 'mrna_three_months_since_second_injection', 'mrna_five_months_since_second_injection', 'mrna_eight_months_since_second_injection', 'single_dose_injection', 'single_dose_twentyone_days_since_injection', 'single_dose_three_months_since_injection', 'single_dose_five_months_since_injection', 'single_dose_eight_months_since_injection', 'booster_injection', 'booster_twentyone_days_since_injection', 'booster_three_months_since_injection', 'booster_five_months_since_injection', 'booster_eight_months_since_injection', 'recovery_negative_test_after_positive_test', 'recovery_six_months_after_negative_test', 'recovery_ten_months_after_negative_test', 'recovery_fourteen_months_since_negative_test', 'recovery_eighteen_months_since_negative_test', 'pcr_voice_test_within_hour', 'pcr_smell_test_within_hour', 'antigen_voice_test_within_hour', 'antigen_smell_test_within_hour', 'home_rapid_voice_test_within_hour', 'home_rapid_smell_test_within_hour' );
+		/*
+		 $tablename = $wpdb->prefix . 'sp_protocol';
+		$fields    = array( 'type', 'name' ); */
+		wp_send_json_success( $_REQUEST );
 
-		$data_array = array();
+		/*
+		 $data_array = array();
 		foreach ( $fields as $field ) {
 			$data_array[ $field ] = $_POST[ $field ];
 		}
@@ -168,7 +171,7 @@ class SponsorForm {
 		} else {
 			$insert = $wpdb->insert( $tablename, $data_array );
 			wp_send_json_success( $wpdb->insert_id );
-		}
+		} */
 
 	}
 

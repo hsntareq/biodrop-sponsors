@@ -13,7 +13,8 @@ class Frontend {
 	 * @return void
 	 */
 	public function __construct() {
-		new Frontend\Shortcode();
+		// new Frontend\Shortcode();
+		new Frontend\Protocols();
 	}
 
 

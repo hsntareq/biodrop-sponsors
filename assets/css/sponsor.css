@@ -398,7 +398,8 @@ body,
 }
 
 .bs-form strong {
-  font-weight: 600;
+  font-weight: 500;
+  text-shadow: 0 0 0.01px #000;
 }
 
 .bs-form small {

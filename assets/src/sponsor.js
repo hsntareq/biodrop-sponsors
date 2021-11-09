@@ -7,6 +7,9 @@ import {
   tooltipList,
   toastTrigger,
 } from "./lib";
+
+// const protocolForm = singleElement(".protocol_form");
+
 let toggles = multipleElement("input.form-toggle-input");
 for (let i = 0; i < toggles.length; i++) {
   toggles[i].onchange = (event) => {
@@ -65,10 +68,12 @@ if (present_item) {
   );
 }
 
-const saveProtocol = singleElement("#save_protocol");
+// const saveProtocol = singleElement("#save_protocol");
 const protocolForm = singleElement("#protocol_form");
-if (saveProtocol) {
-  saveProtocol.onclick = (e) => {
+if (protocolForm) {
+  protocolForm.onsubmit = (e) => {
+    console.log("form submit");
+    e.preventDefault();
     var formData = new FormData(protocolForm);
     formData.append("action", "save_protocol");
     formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
@@ -77,10 +82,13 @@ if (saveProtocol) {
     xhttp.send(formData);
     xhttp.onreadystatechange = function () {
       if (xhttp.readyState === 4) {
-        var getData = JSON.parse(xhttp.response);
+        console.log("not working");
+        // var getData = JSON.parse(xhttp.response);
 
-        console.log(getData.success);
-        if (getData.success == false) {
+        console.log(xhttp.response);
+        // console.log(getData.success);
+
+        /* if (getData.success == false) {
           toastTrigger("error", "This protocol already exists");
         } else {
           toastTrigger("success", "The protocol is saveed successfully");
@@ -97,6 +105,7 @@ if (saveProtocol) {
         setTimeout(() => {
           window.location = pushUrl;
         }, 1000);
+        */
       }
     };
   };
