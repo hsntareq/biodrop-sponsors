@@ -78,13 +78,12 @@ if (protocolForm) {
     formData.append("action", "save_protocol");
     formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", _appObject.ajaxUrl, true);
+    xhttp.open("POST", _appObject.ajaxUrl);
     xhttp.send(formData);
     xhttp.onreadystatechange = function () {
       if (xhttp.readyState === 4) {
         console.log("not working");
         // var getData = JSON.parse(xhttp.response);
-
         console.log(xhttp.response);
         // console.log(getData.success);
 
