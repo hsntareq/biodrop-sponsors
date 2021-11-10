@@ -231,22 +231,25 @@ function custom_login() {
 	}
 }
 
+require '../../../wp-load.php';
 
 add_action( 'wp_ajax_save_protocol', 'save_protocol' );
 function save_protocol() {
 	global $wpdb;
+	$tablename = $wpdb->prefix . 'bs_sponsors';
+	$results   = $wpdb->get_results( "SELECT * FROM $tablename" );
+	// current_time( 'mysql', 1 )
+	$data_array['title']      = $_POST['protocol_name'];
+	$data_array['sponsor_id'] = get_current_user_id();
+	$data_array['created_at'] = current_time( 'mysql', 1 );
 
-	$tablename = $wpdb->prefix . 'sp_protocol';
-	$fields    = array( 'type', 'name' );
-	wp_send_json_success( $_REQUEST );
+	$protocol_id   = $wpdb->insert( $tablename, $data_array );
+	$query         = "SELECT * FROM $tablename";
+	$query_results = $wpdb->get_results( $query );
+	wp_send_json_success( $results );
 
-	 $data_array = array();
-	foreach ( $fields as $field ) {
-		$data_array[ $field ] = $_POST[ $field ];
-	}
-
-	$data_array['user_id'] = get_current_user_id();
-
+	/*
+	 die;
 	$query         = "SELECT * FROM $tablename WHERE 'name'= `{$data_array['name']}`";
 	$query_results = $wpdb->get_results( $query );
 	if ( count( $query_results ) !== 0 ) {
@@ -255,5 +258,5 @@ function save_protocol() {
 		$insert = $wpdb->insert( $tablename, $data_array );
 		wp_send_json_success( $wpdb->insert_id );
 
-	}
+	} */
 }

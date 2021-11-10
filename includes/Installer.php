@@ -58,7 +58,7 @@ class Installer {
 			`id` int unsigned NOT NULL AUTO_INCREMENT,
 			`sponsor_id` int NOT NULL,
 			`title` varchar(100) NOT NULL DEFAULT '',
-			`created_time` datetime NOT NULL,
+			`created_at` datetime NOT NULL,
 			PRIMARY KEY (`id`)
 		  ) $charset_collate";
 

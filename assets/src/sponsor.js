@@ -86,7 +86,11 @@ if (protocolForm) {
         // var getData = JSON.parse(xhttp.response);
         console.log(xhttp.response);
         // console.log(getData.success);
-
+        if (getData.success == false) {
+          toastTrigger("error", "This protocol already exists");
+        } else {
+          toastTrigger("success", "The protocol is saveed successfully");
+        }
         /* if (getData.success == false) {
           toastTrigger("error", "This protocol already exists");
         } else {
