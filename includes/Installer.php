@@ -39,7 +39,7 @@ class Installer {
 
 		$sponsors_table = "CREATE TABLE `{$wpdb->prefix}bs_sponsors` (
 			`id` int unsigned NOT NULL AUTO_INCREMENT,
-			`name` varchar(100) CHARACTER SET $charset_collate NOT NULL DEFAULT '',
+			`name` varchar(100) NOT NULL DEFAULT '',
 			`address1` text,
 			`address2` text,
 			`city` varchar(50) DEFAULT NULL,
@@ -64,7 +64,7 @@ class Installer {
 
 		$tasks = "CREATE TABLE `{$wpdb->prefix}bs_tasks` (
 			`id` int unsigned NOT NULL AUTO_INCREMENT,
-			`task_code` text CHARACTER SET $charset_collate NOT NULL,
+			`task_code` text NOT NULL,
 			`protocol_id` int NOT NULL,
 			`created_at` datetime NOT NULL,
 			`expiration_time_for_determination` datetime DEFAULT NULL,
@@ -79,7 +79,7 @@ class Installer {
 			`protocol_id` int NOT NULL,
 			`user_firstname` varchar(100) DEFAULT NULL,
 			`user_lastname` varchar(100) DEFAULT NULL,
-			`user_email` text CHARACTER SET $charset_collate NOT NULL,
+			`user_email` text NOT NULL,
 			`created_at` datetime NOT NULL,
 			PRIMARY KEY (`id`)
 			)  $charset_collate";

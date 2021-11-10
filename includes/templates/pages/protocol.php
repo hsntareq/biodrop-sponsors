@@ -5,7 +5,7 @@
 		<?php if ( $_GET['edit'] ) { ?>
 		<div class="input-group mb-4">
 			<label class="input-group-text" for="select_protocol">
-				<?php echo esc_attr( 'Select an Existing Protocol from here: ' ); ?>
+				<?php echo esc_attr( 'Select an Existing Protocol from here:' ); ?>
 			</label>
 			<select class="form-select" id="select_protocol">
 				<option selected> -- Choose a protocol -- </option>
@@ -20,28 +20,28 @@
 			<div class="sp-preset">
 				<div class="row">
 					<div class="col">
-						<input type="checkbox" class="btn-check" name="smell" id="preset1" autocomplete="off">
+						<input type="checkbox" class="btn-check" name="task_name[]" value="smell" id="preset1" autocomplete="off">
 						<label class="btn btn-outline-light p-2 border-0 shadow-none remove-outline" for="preset1">
 							<span class="d-inline-block bg-secondary">
 								<img src="<?php echo sponsor()->assets; ?>/images/smell.png" alt="preset1"></span>
 						</label>
 					</div>
 					<div class="col">
-						<input type="checkbox" class="btn-check" name="voice" id="preset2" autocomplete="off">
+						<input type="checkbox" class="btn-check" name="task_name[]" value="voice" id="preset2" autocomplete="off">
 						<label class="btn btn-outline-light p-2 border-0 shadow-none remove-outline" for="preset2">
 							<span class="d-inline-block bg-secondary">
 								<img src="<?php echo sponsor()->assets; ?>/images/voice.png" alt="preset2"></span>
 						</label>
 					</div>
 					<div class="col">
-						<input type="checkbox" class="btn-check" name="symptom" id="preset3" autocomplete=c"off">
+						<input type="checkbox" class="btn-check" name="task_name[]" value="symptom" id="preset3" autocomplete=c"off">
 						<label class="btn btn-outline-light p-2 border-0 shadow-none remove-outline" for="preset3">
 							<span class="d-inline-block bg-secondary">
 								<img src="<?php echo sponsor()->assets; ?>/images/symptoms.png" alt="preset3"></span>
 						</label>
 					</div>
 					<div class="col">
-						<input type="checkbox" class="btn-check" name="pcr_test" id="preset4" autocomplete="off">
+						<input type="checkbox" class="btn-check" name="task_name[]" value="pcr_test" id="preset4" autocomplete="off">
 						<label class="btn btn-outline-light p-2 border-0 shadow-none remove-outline" for="preset4">
 							<span class="d-inline-block bg-secondary">
 								<img src="<?php echo sponsor()->assets; ?>/images/pcr-test.png" alt="preset4"></span>

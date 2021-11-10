@@ -230,3 +230,30 @@ function custom_login() {
 		// wp_redirect( site_url( 'bs-login' ) );
 	}
 }
+
+
+add_action( 'wp_ajax_save_protocol', 'save_protocol' );
+function save_protocol() {
+	global $wpdb;
+
+	$tablename = $wpdb->prefix . 'sp_protocol';
+	$fields    = array( 'type', 'name' );
+	wp_send_json_success( $_REQUEST );
+
+	 $data_array = array();
+	foreach ( $fields as $field ) {
+		$data_array[ $field ] = $_POST[ $field ];
+	}
+
+	$data_array['user_id'] = get_current_user_id();
+
+	$query         = "SELECT * FROM $tablename WHERE 'name'= `{$data_array['name']}`";
+	$query_results = $wpdb->get_results( $query );
+	if ( count( $query_results ) !== 0 ) {
+		wp_send_json_error( 'Error' );
+	} else {
+		$insert = $wpdb->insert( $tablename, $data_array );
+		wp_send_json_success( $wpdb->insert_id );
+
+	}
+}
