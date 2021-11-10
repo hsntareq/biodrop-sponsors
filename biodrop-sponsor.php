@@ -47,8 +47,8 @@ final class SponsorPortal {
 
 		add_action( 'plugins_loaded', array( $this, 'init_plugin' ) );
 		add_action( 'init', array( $this, 'update_anyone_can_register' ) );
-		add_action( 'init', array( $this, 'sponsor_portal_language_load' ) );
-		add_filter( 'login_init', array( $this, 'sponsor_registration_redirect' ) );
+		// add_action( 'init', array( $this, 'sponsor_portal_language_load' ) );
+		// add_filter( 'login_init', array( $this, 'sponsor_registration_redirect' ) );
 	}
 
 
@@ -228,6 +228,7 @@ if ( ! function_exists( 'sponsor' ) ) {
 		$info = array(
 			'path'                   => $path,
 			'url'                    => plugin_dir_url( SPONSOR_FILE ),
+			'site_url'               => get_site_url(),
 			'current_url'            => $current_url,
 			'assets'                 => SPONSOR_ASSETS,
 			'basename'               => plugin_basename( SPONSOR_FILE ),

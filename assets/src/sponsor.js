@@ -74,11 +74,13 @@ if (protocolForm) {
   protocolForm.onsubmit = (e) => {
     console.log("form submit");
     e.preventDefault();
+    var site_url = _appObject.home_url + "/bs-admin/?page=protocol";
     var formData = new FormData(protocolForm);
     formData.append("action", "save_protocol");
-    formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+    // formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
     const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", _appObject.ajaxUrl);
+    xhttp.open("POST", site_url);
+    // xhttp.open("POST", "https://biodrop.test/bs-admin/?page=protocol");
     xhttp.send(formData);
     xhttp.onreadystatechange = function () {
       if (xhttp.readyState === 4) {
