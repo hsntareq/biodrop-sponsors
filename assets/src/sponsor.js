@@ -8,6 +8,10 @@ import {
   toastTrigger,
 } from "./lib";
 
+const btn_spinner = (button) => {
+  let btn = document.querySelector(button);
+  console.log(btn.nextElementSibling);
+};
 // const protocolForm = singleElement(".protocol_form");
 
 let toggles = multipleElement("input.form-toggle-input");
@@ -67,51 +71,56 @@ if (present_item) {
       })
   );
 }
-
-// const saveProtocol = singleElement("#save_protocol");
+const toggleClassSpinner = (thisBtn) => {
+  let hiddenClass = "visually-hidden";
+  let btnSpinner = thisBtn.nextElementSibling.classList;
+  true == btnSpinner.contains(hiddenClass)
+    ? btnSpinner.remove(hiddenClass)
+    : btnSpinner.add(hiddenClass);
+};
+const createProtocol = singleElement("#create_protocol");
 const protocolForm = singleElement("#protocol_form");
-if (protocolForm) {
-  protocolForm.onsubmit = (e) => {
-    console.log("form submit");
-    e.preventDefault();
-    var site_url = _appObject.home_url + "/bs-admin/?page=protocol";
-    var formData = new FormData(protocolForm);
-    formData.append("action", "save_protocol");
-    // formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", site_url);
-    // xhttp.open("POST", "https://biodrop.test/bs-admin/?page=protocol");
-    xhttp.send(formData);
-    xhttp.onreadystatechange = function () {
-      if (xhttp.readyState === 4) {
-        console.log("not working");
-        // var getData = JSON.parse(xhttp.response);
-        console.log(xhttp.response);
-        // console.log(getData.success);
-        if (getData.success == false) {
-          toastTrigger("error", "This protocol already exists");
-        } else {
-          toastTrigger("success", "The protocol is saveed successfully");
+if (protocolForm && createProtocol) {
+  createProtocol.onclick = () => {
+    protocolForm.onsubmit = (e) => {
+      e.preventDefault();
+      toggleClassSpinner(createProtocol);
+      console.log(12);
+      var formData = new FormData(protocolForm);
+      formData.append("action", "save_protocol");
+      formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+      const xhttp = new XMLHttpRequest();
+      xhttp.open("POST", _appObject.ajaxUrl);
+      xhttp.send(formData);
+      xhttp.onreadystatechange = function () {
+        console.log("fasle");
+        if (xhttp.readyState === 4) {
+          console.log("not working");
+          var getData = JSON.parse(xhttp.response);
+          console.log(getData);
+          // console.log(getData.success);
+          if (getData.success == false) {
+            toastTrigger("error", "This protocol already exists");
+          } else {
+            toastTrigger("success", "The protocol created successfully");
+          }
+          setTimeout(() => {
+            toggleClassSpinner(createProtocol);
+          }, 900);
+
+          const url = new URL(window.location);
+          console.log(url.origin + url.pathname);
+          let page = url.searchParams.get("page");
+          let nav = url.searchParams.get("nav");
+          const params = new URLSearchParams({
+            page: page,
+          });
+          const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
+          setTimeout(() => {
+            window.location = pushUrl;
+          }, 1000);
         }
-        /* if (getData.success == false) {
-          toastTrigger("error", "This protocol already exists");
-        } else {
-          toastTrigger("success", "The protocol is saveed successfully");
-        }
-        const url = new URL(window.location);
-        console.log(url.origin + url.pathname);
-        let page = url.searchParams.get("page");
-        let nav = url.searchParams.get("nav");
-        const params = new URLSearchParams({
-          page: page,
-          nav: "protocol-new",
-        });
-        const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
-        setTimeout(() => {
-          window.location = pushUrl;
-        }, 1000);
-        */
-      }
+      };
     };
   };
 }
@@ -121,35 +130,57 @@ const updateProtocol = singleElement("#update_protocol");
 // update_id = update_id.value;
 if (updateProtocol) {
   updateProtocol.onclick = (e) => {
-    var formData = new FormData(protocolForm);
-    formData.append("action", "update_protocol");
-    // formData.append("protocol_id", update_id);
-    formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
-    const xhttp = new XMLHttpRequest();
-    xhttp.open("POST", _appObject.ajaxUrl, true);
-    xhttp.send(formData);
-    xhttp.onreadystatechange = function () {
-      if (xhttp.readyState === 4) {
-        var getData = JSON.parse(xhttp.response);
-        console.log(getData.success);
-        if (getData.success == false) {
-          toastTrigger("error", "This protocol already exists");
-        } else {
-          toastTrigger("success", "The protocol is updated successfully");
+    protocolForm.onsubmit = (e) => {
+      e.preventDefault();
+      toggleClassSpinner(updateProtocol);
+      var formData = new FormData(protocolForm);
+      formData.append("action", "update_protocol");
+      formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+      const xhttp = new XMLHttpRequest();
+      xhttp.open("POST", _appObject.ajaxUrl);
+      xhttp.send(formData);
+      xhttp.onreadystatechange = function () {
+        console.log("fasle");
+        if (xhttp.readyState === 4) {
+          console.log("not working");
+          var getData = JSON.parse(xhttp.response);
+          console.log(getData);
+          if (getData.success == false) {
+            toastTrigger("error", "This protocol already exists");
+          } else {
+            toastTrigger("Updated", "The protocol is updated successfully");
+          }
+          setTimeout(() => {
+            toggleClassSpinner(updateProtocol);
+          }, 900);
+
+          /*
+          const url = new URL(window.location);
+          console.log(url.origin + url.pathname);
+          let page = url.searchParams.get("page");
+          let nav = url.searchParams.get("nav");
+          const params = new URLSearchParams({
+            page: page,
+            nav: "protocol-new",
+          });
+          const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
+          setTimeout(() => {
+            window.location = pushUrl;
+          }, 1000);
+          */
         }
-      }
+      };
     };
   };
 }
 
 const deleteProtocol = singleElement("#delete_protocol");
-// const delete_id = deleteProtocol.dataset.id;
 if (deleteProtocol) {
   deleteProtocol.onclick = (e) => {
     if (confirm("Are you sure you want to  from the database?")) {
       var formData = new FormData();
       formData.append("action", "delete_protocol");
-      formData.append("protocol_id", update_id);
+      formData.append("protocol_id", deleteProtocol.dataset.id);
       formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
       const xhttp = new XMLHttpRequest();
       xhttp.open("POST", _appObject.ajaxUrl, true);
@@ -166,8 +197,7 @@ if (deleteProtocol) {
             let page = url.searchParams.get("page");
             let nav = url.searchParams.get("nav");
             const params = new URLSearchParams({
-              page: page,
-              nav: "protocol",
+              page: "protocol",
             });
             const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
             setTimeout(() => {
@@ -188,16 +218,16 @@ if (selectProtocol) {
     // console.log(window.location.search);
     // History push
     const url = new URL(window.location);
-    console.log(url.origin + url.pathname);
     let page = url.searchParams.get("page");
-    let nav = url.searchParams.get("nav");
     const params = new URLSearchParams({
       page: page,
-      nav: nav,
       edit: e.target.value,
     });
-    const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
-    window.location = pushUrl;
+    window.location = `${url.origin + url.pathname}?${params.toString()}`;
+
+    // window.location = pushUrl;
+
+    // window.location = pushUrl;
 
     // var searchParams = new URLSearchParams(window.location.search);
     // searchParams.set("edit", e.target.value);

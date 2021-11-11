@@ -83,4 +83,16 @@
 			<p class="fw-lighter fs-6 mb-0 py-1">Copyright &copy; <?php echo date( 'Y' ); ?> Biodrop Backoffice</p>
 		</footer>
 	</main>
+	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+			<div class="toast-header">
+				<strong class="me-auto">Success</strong>
+				<!-- <small>11 mins ago</small> -->
+				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+			</div>
+			<div class="toast-body">
+
+			</div>
+		</div>
+	</div>
 <?php sp_footer(); ?>
