@@ -1,5 +1,5 @@
 <?php sp_header(); ?>
-	<main class="bs-main">
+	<main class="bs-main vh-100 overflow-hidden">
 		<header class="bg-dark bg-opacity-75 py-3 shadow">
 			<div class="container">
 				<div class="d-flex align-items-center text-white">
@@ -11,10 +11,10 @@
 			</div>
 		</header>
 
-		<div class="flex-grow-1 main-content pb-5">
+		<div class="flex-grow-1 main-content pb-5 overflow-scroll">
 			<div class="container">
 				<div class="row g-5">
-					<div class="col-3">
+					<div class="col-sm-4 col-md-3">
 						<div class="bs-nav shadow-sm">
 							<div class="list-group list-group-flush">
 								<a href="<?php echo esc_url( get_nav_url( 'entry' ) ); ?>"
@@ -45,7 +45,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-9">
+					<div class="col-sm-8 col-md-9">
 
 						<div class="content-area">
 
@@ -82,17 +82,17 @@
 		<footer class="text-center bg-dark bg-opacity-75 text-white">
 			<p class="fw-lighter fs-6 mb-0 py-1">Copyright &copy; <?php echo date( 'Y' ); ?> Biodrop Backoffice</p>
 		</footer>
-	</main>
-	<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
-		<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-			<div class="toast-header">
-				<strong class="me-auto">Success</strong>
-				<!-- <small>11 mins ago</small> -->
-				<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-			</div>
-			<div class="toast-body">
+		<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+			<div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+				<div class="toast-header">
+					<strong class="me-auto">Success</strong>
+					<!-- <small>11 mins ago</small> -->
+					<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+				</div>
+				<div class="toast-body">
 
+				</div>
 			</div>
 		</div>
-	</div>
+	</main>
 <?php sp_footer(); ?>

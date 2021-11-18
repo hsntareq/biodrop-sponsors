@@ -334,10 +334,12 @@ select.form-control {
   display: none !important;
 }
 
-html,
-body,
-.bs-main {
-  height: 100%;
+html {
+  min-height: 100%;
+}
+
+body {
+  height: 100vh;
 }
 
 .btn-check {
@@ -345,7 +347,9 @@ body,
 }
 
 .bs-main {
-  background-color: #f2f2f2;
+  background-color: #f3f3f3;
+  height: 100%;
+  min-height: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

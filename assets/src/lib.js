@@ -1,3 +1,15 @@
+const elemByID = (el) => {
+  return document.getElementById(el);
+};
+
+const elemByClasses = (el) => {
+  return document.getElementsByClassName(el);
+};
+
+const elemByName = (el) => {
+  return document.getElementsByName(el);
+};
+
 const singleElement = (el) => {
   return document.querySelector(el);
 };
@@ -46,4 +58,7 @@ export {
   toogleInputValue,
   tooltipList,
   toastTrigger,
+  elemByID,
+  elemByClasses,
+  elemByName,
 };

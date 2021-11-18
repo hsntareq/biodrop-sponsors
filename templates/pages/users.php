@@ -1,3 +1,4 @@
-<h1>Users</h1>
-<p>Settings page content</p>
-<hr class="mb-5">
+<div class="mb-4 border-bottom">
+    <h1>Users</h1>
+    <p>Settings page content</p>
+</div>

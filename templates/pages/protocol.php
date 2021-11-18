@@ -1,5 +1,17 @@
-<h1><?php echo esc_html( 'Protocol Settings' ); ?></h1>
-<p><?php echo esc_html( 'Set entry protocol requirements and thresholds' ); ?></p>
+<?php
+/**
+ * Template: Protocol create or edit
+ *
+ * @package WordPress Plugin
+ * @subpackage protocol
+ * @since 1.0.0
+ */
+
+?>
+<div class="mb-4 border-bottom">
+	<h1><?php echo esc_html( 'Protocol Settings' ); ?></h1>
+	<p><?php echo esc_html( 'Set entry protocol requirements and thresholds' ); ?></p>
+</div>
 <form id="protocol_form">
 	<div class="bs-presets">
 		<?php
@@ -8,16 +20,16 @@
 		$protocols        = get_fields( $table_protocols );
 		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? sanitize_text_field( $_GET['edit'] ) : 0;
 		$field_label      = ! empty( get_edit_data( 'edit' ) ) ? 'Update Protocol' : 'Create Protocol';
-
-		if ( ! empty( $protocols ) || $_GET['edit'] ) {
+		if ( ! empty( $protocols ) ) {
 			foreach ( $protocols as $protocol ) {
-				if ( $protocol->id === $_GET['edit'] ) {
-					$this_protocol = $protocol;
-				}
+				$this_protocol = isset( $_GET['edit'] ) && $protocol->id === $_GET['edit'] ? $protocol : null;
 			}
-			$task_data = array_shift( get_data_by_field( $this_protocol->id, 'protocol_id', $table_tasks ) );
-			$task_code = json_decode( $task_data->task_code );
+			$task_data = isset( $this_protocol ) ? get_data_by_field( $this_protocol->id, 'protocol_id', $table_tasks ) : array();
+			$task_data = isset( $this_protocol ) ? array_shift( $task_data ) : array();
 
+			if ( isset( $task_data ) && is_object( $task_data ) ) {
+				$task_code = json_decode( $task_data->task_code );
+			}
 			?>
 			<div class="input-group mb-4">
 				<label class="input-group-text" for="select_protocol">
@@ -28,7 +40,7 @@
 					<?php
 					foreach ( $protocols as $protocol ) {
 						?>
-					<option <?php echo $_GET['edit'] == $protocol->id ? 'selected' : ''; ?> value="<?php echo esc_attr( $protocol->id ); ?>"><?php echo esc_attr( $protocol->title ); ?></option>
+					<option <?php echo isset( $_GET['edit'] ) && $_GET['edit'] == $protocol->id ? 'selected' : ''; ?> value="<?php echo esc_attr( $protocol->id ); ?>"><?php echo esc_attr( $protocol->title ); ?></option>
 					<?php } ?>
 				</select>
 				<?php if ( ! empty( get_edit_data( 'edit' ) ) ) { ?>

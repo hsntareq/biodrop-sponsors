@@ -46,11 +46,18 @@ class Installer {
 			`state` varchar(10) DEFAULT NULL,
 			`zip` int DEFAULT NULL,
 			`email` text NOT NULL,
+			PRIMARY KEY (`id`)
+		  ) $charset_collate";
+
+		$sponsors_cards = "CREATE TABLE `{$wpdb->prefix}bs_sponsor_cards` (
+			`id` int unsigned NOT NULL AUTO_INCREMENT,
+			`name` varchar(100) NOT NULL DEFAULT '',
+			`sponsor_id` int NOT NULL,
 			`card_number` int DEFAULT NULL,
 			`card_expiration_month` int DEFAULT NULL,
 			`card_expiration_year` int DEFAULT NULL,
 			`card_code` int DEFAULT NULL,
-			`card_name` varchar(100) DEFAULT NULL,
+			`created_at` datetime NOT NULL,
 			PRIMARY KEY (`id`)
 		  ) $charset_collate";
 
@@ -101,6 +108,7 @@ class Installer {
 			require_once ABSPATH . 'wp-admin/includes/upgrade.php';
 		}
 		dbDelta( $sponsors_table );
+		dbDelta( $sponsors_cards );
 		dbDelta( $protocols_table );
 		dbDelta( $tasks );
 		dbDelta( $user_protocols );

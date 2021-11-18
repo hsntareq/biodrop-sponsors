@@ -52,6 +52,8 @@
     },
     "dependencies": {
         "@wordpress/media-utils": "^3.0.1",
+        "imask": "^6.2.2",
+        "inputmask": "^5.0.6",
         "mini-css-extract-plugin": "^2.3.0",
         "webpack-dev-server": "^4.3.1"
     }

@@ -45,8 +45,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "toogleDisabler": () => (/* binding */ toogleDisabler),
 /* harmony export */   "toogleInputValue": () => (/* binding */ toogleInputValue),
 /* harmony export */   "tooltipList": () => (/* binding */ tooltipList),
-/* harmony export */   "toastTrigger": () => (/* binding */ toastTrigger)
+/* harmony export */   "toastTrigger": () => (/* binding */ toastTrigger),
+/* harmony export */   "elemByID": () => (/* binding */ elemByID),
+/* harmony export */   "elemByClasses": () => (/* binding */ elemByClasses),
+/* harmony export */   "elemByName": () => (/* binding */ elemByName)
 /* harmony export */ });
+const elemByID = el => {
+  return document.getElementById(el);
+};
+
+const elemByClasses = el => {
+  return document.getElementsByClassName(el);
+};
+
+const elemByName = el => {
+  return document.getElementsByName(el);
+};
+
 const singleElement = el => {
   return document.querySelector(el);
 };
