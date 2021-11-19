@@ -8,7 +8,7 @@ body {
   height: 100%;
   overflow: hidden;
 }
-body.logged-in {
+body.is_admin_bar {
   height: calc(100% - 32px);
 }
 .btn-check {

@@ -344,7 +344,7 @@ body {
   overflow: hidden;
 }
 
-body.logged-in {
+body.is_admin_bar {
   height: calc(100% - 32px);
 }
 
