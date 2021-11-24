@@ -20,11 +20,16 @@
 		$protocols        = get_fields( $table_protocols );
 		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? sanitize_text_field( $_GET['edit'] ) : 0;
 		$field_label      = ! empty( get_edit_data( 'edit' ) ) ? 'Update Protocol' : 'Create Protocol';
+
 		if ( ! empty( $protocols ) ) {
+
 			foreach ( $protocols as $protocol ) {
-				$this_protocol = isset( $_GET['edit'] ) && $protocol->id === $_GET['edit'] ? $protocol : null;
+				if(isset( $_GET['edit'] ) && $protocol->id === $current_protocol){
+					$this_protocol =  $protocol;
+				}
 			}
-			$task_data = isset( $this_protocol ) ? get_data_by_field( $this_protocol->id, 'protocol_id', $table_tasks ) : array();
+
+			$task_data = isset( $this_protocol ) && ! empty( $this_protocol ) ? get_data_by_field( $this_protocol->id, 'protocol_id', $table_tasks ) : array();
 			$task_data = isset( $this_protocol ) ? array_shift( $task_data ) : array();
 
 			if ( isset( $task_data ) && is_object( $task_data ) ) {

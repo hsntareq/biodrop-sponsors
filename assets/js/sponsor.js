@@ -3010,6 +3010,58 @@
 
 /***/ }),
 
+/***/ "./assets/src/inc.js":
+/*!***************************!*\
+  !*** ./assets/src/inc.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _imask_min_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./imask.min.js */ "./assets/src/imask.min.js");
+/* harmony import */ var _imask_min_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_imask_min_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _protocols_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./protocols.js */ "./assets/src/protocols.js");
+
+
+const cardNumber = document.getElementById('card_number');
+
+if (null !== cardNumber) {
+  IMask(cardNumber, {
+    mask: '0000-0000-0000-0000',
+    lazy: false,
+    placeholderChar: '_'
+  });
+}
+
+const expirationDate = document.getElementById('expiration_date');
+
+if (null !== expirationDate) {
+  IMask(expirationDate, {
+    mask: '00/00',
+    lazy: false,
+    placeholderChar: '_'
+  });
+}
+
+const cardCvv = document.getElementById('card_cvv');
+
+if (null !== cardCvv) {
+  IMask(cardCvv, {
+    mask: '000',
+    lazy: false,
+    placeholderChar: '_'
+  });
+} //notice_message
+
+
+console.log('inc running');
+
+const notice_message = (type = 'success', message = '') => {
+  return `<div id="card_notice" class="alert alert-${type} mb-0" role="alert">${message}</div>`;
+};
+
+/***/ }),
+
 /***/ "./assets/src/lib.js":
 /*!***************************!*\
   !*** ./assets/src/lib.js ***!
@@ -3028,7 +3080,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "toastTrigger": () => (/* binding */ toastTrigger),
 /* harmony export */   "elemByID": () => (/* binding */ elemByID),
 /* harmony export */   "elemByClasses": () => (/* binding */ elemByClasses),
-/* harmony export */   "elemByName": () => (/* binding */ elemByName)
+/* harmony export */   "elemByName": () => (/* binding */ elemByName),
+/* harmony export */   "elemByTag": () => (/* binding */ elemByTag)
 /* harmony export */ });
 const elemByID = el => {
   return document.getElementById(el);
@@ -3040,6 +3093,10 @@ const elemByClasses = el => {
 
 const elemByName = el => {
   return document.getElementsByName(el);
+};
+
+const elemByTag = el => {
+  return document.getElementsByTagName(el);
 };
 
 const singleElement = el => {
@@ -3075,138 +3132,37 @@ const toastTrigger = (type, message) => {
   var toastLiveExample = document.getElementById("liveToast");
   var toast = new bootstrap.Toast(toastLiveExample);
   toastLiveExample.querySelector(".toast-body").innerText = message;
+  toastLiveExample.querySelector(".toast-header strong").innerText = type;
   toast.show();
 };
 
 
 
-/***/ })
+/***/ }),
 
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
-/******/ 		if (cachedModule !== undefined) {
-/******/ 			return cachedModule.exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__webpack_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => (module['default']) :
-/******/ 				() => (module);
-/******/ 			__webpack_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/global */
-/******/ 	(() => {
-/******/ 		__webpack_require__.g = (function() {
-/******/ 			if (typeof globalThis === 'object') return globalThis;
-/******/ 			try {
-/******/ 				return this || new Function('return this')();
-/******/ 			} catch (e) {
-/******/ 				if (typeof window === 'object') return window;
-/******/ 			}
-/******/ 		})();
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	(() => {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = (exports) => {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/************************************************************************/
-var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be in strict mode.
-(() => {
+/***/ "./assets/src/protocols.js":
+/*!*********************************!*\
+  !*** ./assets/src/protocols.js ***!
+  \*********************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
 "use strict";
-/*!*******************************!*\
-  !*** ./assets/src/sponsor.js ***!
-  \*******************************/
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./lib */ "./assets/src/lib.js");
-/* harmony import */ var _imask_min_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./imask.min.js */ "./assets/src/imask.min.js");
-/* harmony import */ var _imask_min_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_imask_min_js__WEBPACK_IMPORTED_MODULE_1__);
-
-
-IMask(document.getElementById('card_number'), {
-  mask: '0000-0000-0000-0000',
-  lazy: false,
-  placeholderChar: '_'
-});
-IMask(document.getElementById('expiration_date'), {
-  mask: '00/00',
-  lazy: false,
-  placeholderChar: '_'
-});
-IMask(document.getElementById('card_cvv'), {
-  mask: '000',
-  lazy: false,
-  placeholderChar: '_'
-});
-
-const btn_spinner = button => {
-  let btn = document.querySelector(button);
-  console.log(btn.nextElementSibling);
-}; // const protocolForm = singleElement(".protocol_form");
-
+ // const protocolForm = singleElement(".protocol_form");
 
 let toggles = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.multipleElement)("input.form-toggle-input");
 
-for (let i = 0; i < toggles.length; i++) {
-  toggles[i].onchange = event => {
-    (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleDisabler)(event.target);
-    (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleInputValue)(event.target);
-  };
+if (null !== toggles) {
+  for (let i = 0; i < toggles.length; i++) {
+    toggles[i].onchange = event => {
+      (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleDisabler)(event.target);
+      (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleInputValue)(event.target);
+    };
 
-  (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleDisabler)(toggles[i]);
-  (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleInputValue)(toggles[i]);
+    (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleDisabler)(toggles[i]);
+    (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toogleInputValue)(toggles[i]);
+  }
 }
 
 String.prototype.toCapitalize = function () {
@@ -3403,40 +3359,115 @@ if (selectProtocol) {
   };
 }
 
-const newCardButton = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.elemByID)('new_card_button');
-const newCardClasses = newCardButton && newCardButton.classList;
-const toggleFormBtn = newCardButton.querySelector('i').classList;
-const toggleFormBtnText = newCardButton.querySelector('span');
-const addCreditCard = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.elemByID)('add_credit_card');
-const ccClasses = addCreditCard.classList;
-const creditCardForm = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.elemByID)('credit_card_form');
-const cardSubmitBtn = (0,_lib__WEBPACK_IMPORTED_MODULE_0__.elemByID)('card_submit_btn');
+/***/ })
 
-newCardButton.onclick = e => {
-  // console.log(newCardButton.contains('btn'));
-  toggleFormBtnText.innerText = toggleFormBtnText.innerText == 'New Card' ? 'Close Form' : 'New Card';
-  toggleFormBtn.contains('fa-plus') ? toggleFormBtn.remove('fa-plus') : toggleFormBtn.add('fa-plus');
-  toggleFormBtn.contains('fa-minus') ? toggleFormBtn.remove('fa-minus') : toggleFormBtn.add('fa-minus');
-  newCardClasses.contains('btn-success') ? newCardClasses.remove('btn-success') : newCardClasses.add('btn-success');
-  newCardClasses.contains('btn-danger') ? newCardClasses.remove('btn-danger') : newCardClasses.add('btn-danger');
-  ccClasses.contains('visually-hidden') ? ccClasses.remove('visually-hidden') : ccClasses.add('visually-hidden');
-};
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__webpack_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => (module['default']) :
+/******/ 				() => (module);
+/******/ 			__webpack_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/global */
+/******/ 	(() => {
+/******/ 		__webpack_require__.g = (function() {
+/******/ 			if (typeof globalThis === 'object') return globalThis;
+/******/ 			try {
+/******/ 				return this || new Function('return this')();
+/******/ 			} catch (e) {
+/******/ 				if (typeof window === 'object') return window;
+/******/ 			}
+/******/ 		})();
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+var __webpack_exports__ = {};
+// This entry need to be wrapped in an IIFE because it need to be in strict mode.
+(() => {
+"use strict";
+/*!*******************************!*\
+  !*** ./assets/src/sponsor.js ***!
+  \*******************************/
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _inc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./inc.js */ "./assets/src/inc.js");
+/* harmony import */ var _lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./lib */ "./assets/src/lib.js");
 
-let wasSubmit = false;
 
-creditCardForm.onsubmit = e => {
-  e.preventDefault();
-  wasSubmit = !wasSubmit ? true : false;
-
-  if (!wasSubmit) {
-    return;
+document.addEventListener('readystatechange', event => {
+  if (event.target.readyState === 'interactive') {// console.log('init');
+  } else if (event.target.readyState === 'complete') {
+    setTimeout(() => {
+      loadUserCards();
+      ccEditFunction();
+    }, 500);
   }
+});
+const cardListBlock = document.querySelector('#card_list_block');
+let cardDataTable = cardListBlock && cardListBlock.querySelector('table');
 
-  cardSubmitBtn.disabled = true;
-  cardSubmitBtn.querySelector('.spinner-grow').classList.remove('visually-hidden');
-  var formData = new FormData(creditCardForm);
-  formData.append("action", "add_credit_card"); // formData.append("protocol_id", deleteProtocol.dataset.id);
-
+const loadUserCards = () => {
+  var formData = new FormData();
+  formData.append("action", "load_user_cards");
   formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
   const xhttp = new XMLHttpRequest();
   xhttp.open("POST", _appObject.ajaxUrl, true);
@@ -3444,57 +3475,198 @@ creditCardForm.onsubmit = e => {
 
   xhttp.onreadystatechange = function () {
     if (xhttp.readyState === 4) {
-      var getData = JSON.parse(xhttp.response).data;
-      getData.forEach((item, i) => {
-        console.log(item, i);
-      });
-      /* if (getData.success == true) {
-        toastTrigger("success", "The protocol is deleted successfully");
-         const url = new URL(window.location);
-        console.log(url.origin + url.pathname);
-        let page = url.searchParams.get("page");
-        let nav = url.searchParams.get("nav");
-        const params = new URLSearchParams({
-          page: "protocol",
-        });
-        const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
-        setTimeout(() => {
-          window.location = pushUrl;
-        }, 1000);
-      } */
+      let getData = JSON.parse(xhttp.response);
+      let cardData = getData.data;
 
-      setTimeout(() => {
-        cardSubmitBtn.disabled = false;
-        cardSubmitBtn.querySelector('.spinner-grow').classList.add('visually-hidden');
-        wasSubmit = true;
-        creditCardForm.reset();
-      }, 1000);
+      if (true === getData.success) {
+        if (0 < cardData.length) {
+          if (null !== cardDataTable) {
+            ccDataAfterAction(cardDataTable, cardData);
+
+            if (cardDataTable.classList.contains('placeholder')) {
+              cardDataTable.classList.remove('placeholder');
+            }
+
+            cardDataTable.style.display = 'table';
+          }
+        } else {
+          console.log('nothing');
+          cardDataTable.style.display = 'none';
+        }
+      }
+
+      ccDeleteFunction();
+      ccEditFunction();
     }
   };
 };
 
-const user_card_view = (sl, id, card, name, number, exp_month, exp_year) => {
-  return `
-    <tr class="align-middle">
-      <th scope="row">${sl}</th>
-      <td>
-        <i class="fa-2x ${card} fab fa-cc-mastercard"></i>
-      </td>
-      <td>${name}</td>
-      <td>${number}</td>
-      <td>${exp_month}/${exp_year}</td>
-      <td>
-      <div class="btn-group" role="group" aria-label="Basic outlined example">
-        <button type="button" class="btn btn-sm btn-outline-primary" data-id="${id}">
-          <i class="far fa-edit"></i>
-        </button>
-        <button type="button" class="btn btn-sm btn-outline-danger" data-id="${id}">
-          <i class="far fa-trash-alt"></i>
-        </button>
-      </div>
-      </td>
-    </tr>
-  `;
+const ccDataAfterAction = (table, data) => {
+  let tBodyData = '',
+      tBody = table && table.querySelector('tbody');
+  data.forEach((item, sl) => {
+    tBodyData = tBodyData + `
+      <tr class="align-middle">
+        <th scope="row">${++sl}</th>
+        <td>
+          <i class="fa-2x fab fa-cc-${item.name}"></i>
+        </td>
+        <td>${item.name_on_card}</td>
+        <td>${item.card_number}</td>
+        <td class="text-center">${item.card_expiration_month}/${item.card_expiration_year}</td>
+        <td>
+        <div class="btn-group" role="group" aria-label="Basic outlined example">
+          <button type="button" class="btn btn-sm btn-outline-primary cc_edit_btn" data-id="${item.id}">
+            <i class="far fa-edit"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-danger cc_delete_btn" data-id="${item.id}">
+            <i class="far fa-trash-alt"></i>
+          </button>
+        </div>
+        </td>
+      </tr>`;
+  });
+  tBody.innerHTML = tBodyData;
+};
+
+const btn_spinner = button => {
+  let btn = document.querySelector(button);
+  console.log(btn.nextElementSibling);
+};
+
+const newCardButton = document.getElementById('new_card_button');
+const newCardClasses = newCardButton && newCardButton.classList;
+const toggleFormBtn = newCardButton && newCardButton.querySelector('i').classList;
+const toggleFormBtnText = newCardButton && newCardButton.querySelector('span');
+const addCreditCard = document.getElementById('add_credit_card');
+const creditCardForm = document.getElementById('credit_card_form');
+const cardAddBtn = document.getElementById('card_add_btn');
+const cardCancelBtn = document.getElementById('card_cancel_btn');
+const spinLoader = addCreditCard && addCreditCard.querySelector('.spinner').classList;
+
+if (null !== cardCancelBtn) {
+  cardCancelBtn.onclick = e => {
+    addCreditCard.style.display = 'none';
+  };
+}
+
+if (null !== newCardButton) {
+  newCardButton.onclick = e => {
+    if (newCardButton.classList.contains('btn-success')) {
+      setTimeout(() => {
+        spinLoader.add('invisible');
+      }, 500);
+      creditCardForm.reset();
+      spinLoader.remove('invisible');
+      addCreditCard.style.display = 'block';
+      creditCardForm.dataset.action = 'add_credit_card_action';
+      cardAddBtn.innerHTML = '<i class="fad fa-save"></i> <span class="mx-2">Save Card</span>';
+    }
+  };
+}
+
+if (null !== creditCardForm) {
+  creditCardForm.onsubmit = e => {
+    e.preventDefault();
+    spinLoader.remove('invisible');
+    cardAddBtn.disabled = true; // cardAddBtn.querySelector('.spinner-grow').classList.remove('visually-hidden');
+
+    var formData = new FormData(creditCardForm);
+    var cardAction = creditCardForm.dataset.action;
+    formData.append("card_id", creditCardForm.dataset.card_id);
+    formData.append("action", cardAction);
+    formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("POST", _appObject.ajaxUrl, true);
+    xhttp.send(formData);
+
+    xhttp.onreadystatechange = function () {
+      if (xhttp.readyState === 4) {
+        let getData = JSON.parse(xhttp.response).data;
+
+        if ('exist' == getData.status) {
+          (0,_lib__WEBPACK_IMPORTED_MODULE_1__.toastTrigger)('warning', 'This Card Number already exist!');
+          console.log(getData);
+        }
+
+        loadUserCards();
+        setTimeout(() => {
+          cardAddBtn.disabled = false;
+          spinLoader.add('invisible');
+          'add_credit_card_action' == cardAction ? creditCardForm.reset() : '';
+        }, 1000);
+      }
+    };
+  };
+}
+
+const ccDeleteFunction = () => {
+  const ccDeleteBtn = document.querySelectorAll('.cc_delete_btn');
+  ccDeleteBtn.forEach(item => {
+    item.onclick = e => {
+      console.log(item);
+      var formData = new FormData();
+      formData.append("action", "delete_user_cards");
+      formData.append("cc_id", item.dataset.id);
+      formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+      const xhttp = new XMLHttpRequest();
+      xhttp.open("POST", _appObject.ajaxUrl, true);
+      xhttp.send(formData);
+
+      xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4) {
+          let getData = JSON.parse(xhttp.response);
+          loadUserCards();
+        }
+      };
+    };
+  });
+};
+
+const ccEditFunction = () => {
+  const ccEditBtn = document.querySelectorAll('.cc_edit_btn');
+  ccEditBtn.forEach(item => {
+    item.onclick = e => {
+      setTimeout(() => {
+        spinLoader.add('invisible');
+      }, 500);
+      spinLoader.remove('invisible');
+      addCreditCard.style.display = 'block';
+      creditCardForm.dataset.action = 'edit_credit_card_action';
+      cardAddBtn.innerHTML = '<i class="fad fa-edit"></i> <span class="mx-2">Update Card</span>';
+      var formData = new FormData();
+      formData.append("action", "edit_user_cards");
+      formData.append("cc_id", item.dataset.id);
+      formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);
+      const xhttp = new XMLHttpRequest();
+      xhttp.open("POST", _appObject.ajaxUrl, true);
+      xhttp.send(formData);
+
+      xhttp.onreadystatechange = function () {
+        if (xhttp.readyState === 4) {
+          let getData = JSON.parse(xhttp.response);
+          loadSingleCard(getData); // loadUserCards();
+
+          spinLoader.add('invisible');
+        }
+      };
+    };
+  });
+};
+
+const loadSingleCard = getData => {
+  let editData = getData.data.shift();
+  creditCardForm.dataset.card_id = editData.id;
+  console.log(editData);
+  let cardData = [];
+  cardData['card_number'] = editData.card_number;
+  cardData['expiration_date'] = editData.card_expiration_month + '/' + editData.card_expiration_year;
+  cardData['card_cvv'] = editData.card_code;
+  cardData['payment_type'] = editData.name;
+  cardData['name_on_card'] = editData.name_on_card;
+  Object.entries(cardData).forEach(([key, value]) => {
+    document.getElementById(key).value = value;
+  });
 };
 })();
 

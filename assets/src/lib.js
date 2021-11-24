@@ -9,6 +9,9 @@ const elemByClasses = (el) => {
 const elemByName = (el) => {
   return document.getElementsByName(el);
 };
+const elemByTag = (el) => {
+  return document.getElementsByTagName(el);
+};
 
 const singleElement = (el) => {
   return document.querySelector(el);
@@ -48,6 +51,7 @@ const toastTrigger = (type, message) => {
   var toastLiveExample = document.getElementById("liveToast");
   var toast = new bootstrap.Toast(toastLiveExample);
   toastLiveExample.querySelector(".toast-body").innerText = message;
+  toastLiveExample.querySelector(".toast-header strong").innerText = type;
   toast.show();
 };
 export {
@@ -61,4 +65,5 @@ export {
   elemByID,
   elemByClasses,
   elemByName,
+  elemByTag
 };
