@@ -52,6 +52,7 @@ class Installer {
 		$sponsors_cards = "CREATE TABLE `{$wpdb->prefix}bs_sponsor_cards` (
 			`id` int unsigned NOT NULL AUTO_INCREMENT,
 			`name` varchar(100) NOT NULL DEFAULT '',
+			`name_on_card` varchar(100) NOT NULL DEFAULT '',
 			`sponsor_id` int NOT NULL,
 			`card_number` int DEFAULT NULL,
 			`card_expiration_month` int DEFAULT NULL,
