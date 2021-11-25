@@ -8,7 +8,7 @@ $user    = wp_get_current_user();
 $cc_data = get_credit_cards( $user->ID );
 
 // $user = wp_get_current_user()->data;
-// pr( $user );
+
 if ( isset( $_POST ) ) {
 	$useremail    = isset( $_POST['user_email'] ) ? sanitize_text_field( $_POST['user_email'] ) : '';
 	$first_name   = isset( $_POST['first_name'] ) ? sanitize_text_field( $_POST['first_name'] ) : '';

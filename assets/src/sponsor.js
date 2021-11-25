@@ -45,7 +45,9 @@ const loadUserCards = () => {
 
         } else {
           console.log('nothing');
-          cardDataTable.style.display = 'none';
+          if (null !== cardDataTable) {
+            cardDataTable.style.display = 'none';
+          }
         }
       }
 

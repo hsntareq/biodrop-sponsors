@@ -4,12 +4,7 @@ import {
     nameElement,
     toogleDisabler,
     toogleInputValue,
-    tooltipList,
     toastTrigger,
-    elemByID,
-    elemByClasses,
-    elemByName,
-    elemByTag
 } from "./lib";
 // const protocolForm = singleElement(".protocol_form");
 let toggles = multipleElement("input.form-toggle-input");

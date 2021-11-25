@@ -28,9 +28,3 @@ if (null !== cardCvv) {
     });
 }
 
-
-//notice_message
-console.log('inc running');
-const notice_message = (type = 'success', message = '') => {
-    return `<div id="card_notice" class="alert alert-${type} mb-0" role="alert">${message}</div>`;
-}

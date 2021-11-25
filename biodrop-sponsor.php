@@ -120,6 +120,8 @@ final class SponsorPortal {
 	 */
 	public function activate() {
 		$installer = new \Sponsor\Installer();
+		
+
 		$installer->run();
 	}
 

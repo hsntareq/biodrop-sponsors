@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/libs.php';
-// require ABSPATH . 'wp-load.php';
+require ABSPATH . 'wp-load.php';
 add_action( 'wp_ajax_save_protocol', 'save_protocol' );
 add_action( 'wp_ajax_update_protocol', 'update_protocol' );
 add_action( 'wp_ajax_delete_protocol', 'delete_protocol' );
@@ -12,6 +12,12 @@ add_action( 'wp_ajax_edit_user_cards', 'edit_user_cards' );
 
 add_filter( 'wp_title', 'biodrop_page_title', 10000, 2 );
 add_action( 'init', 'sponsor_admin_access', 100 );
+add_filter( 'status_header', 'bs_status_header_function', 10, 2 );
+
+function bs_status_header_function( $status_header, $header ) {
+	return (int) $header == 404 ? status_header( 202 ) : $status_header;
+}
+
 
 function user_data_action() {
 	pr( $_REQUEST );
@@ -222,6 +228,7 @@ function add_credit_card_action() {
 
 function sponsor_admin_access() {
 	global $current_user;
+
 	if ( in_array( 'sponsor', $current_user->roles ) ) {
 		add_filter( 'show_admin_bar', '__return_false' );
 	}

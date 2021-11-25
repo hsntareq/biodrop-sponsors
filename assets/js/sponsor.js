@@ -3051,14 +3051,7 @@ if (null !== cardCvv) {
     lazy: false,
     placeholderChar: '_'
   });
-} //notice_message
-
-
-console.log('inc running');
-
-const notice_message = (type = 'success', message = '') => {
-  return `<div id="card_notice" class="alert alert-${type} mb-0" role="alert">${message}</div>`;
-};
+}
 
 /***/ }),
 
@@ -3491,7 +3484,10 @@ const loadUserCards = () => {
           }
         } else {
           console.log('nothing');
-          cardDataTable.style.display = 'none';
+
+          if (null !== cardDataTable) {
+            cardDataTable.style.display = 'none';
+          }
         }
       }
 
