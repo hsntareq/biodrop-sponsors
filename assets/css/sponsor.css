@@ -341,7 +341,6 @@ html {
 
 body {
   height: 100%;
-  overflow: hidden;
 }
 
 body.is_admin_bar {
@@ -391,6 +390,11 @@ body.is_admin_bar {
 }
 
 .sp-login {
+  min-height: 300px;
+  border-radius: 30px;
+}
+
+.sp-register {
   min-height: 300px;
   border-radius: 30px;
 }

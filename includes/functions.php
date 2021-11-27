@@ -13,6 +13,43 @@ add_action( 'wp_ajax_edit_user_cards', 'edit_user_cards' );
 add_filter( 'wp_title', 'biodrop_page_title', 10000, 2 );
 add_action( 'init', 'sponsor_admin_access', 100 );
 add_filter( 'status_header', 'bs_status_header_function', 10, 2 );
+// add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
+
+
+function sponsor_no_admin_access() {
+	$redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
+	global $current_user;
+	if ( in_array( 'sponsor', $current_user->roles ) ) {
+		exit( wp_redirect( $redirect ) );
+	}
+}
+
+
+// add_filter( 'template_include', 'sponsors_admin_page_template', 1000, 1 );
+function sponsors_admin_page_template( $template ) {
+	global $wp;
+	if ( is_user_logged_in() ) {
+		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
+	} else {
+		$allowed_urls = array( 'bs-login', 'bs-register' );
+		if ( ! in_array( $wp->request, $allowed_urls ) ) {
+			wp_redirect( site_url( 'bs-login' ) );
+		}
+		if ( $wp->request == 'bs-register' ) {
+			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-register.php';
+		} elseif ( $wp->request == 'bs-login' ) {
+			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
+		}
+	}
+
+	if ( file_exists( $admin_template ) ) {
+		$template = $admin_template;
+	}
+
+	return $template;
+}
+
+
 
 function bs_status_header_function( $status_header, $header ) {
 	return (int) $header == 404 ? status_header( 202 ) : $status_header;
@@ -66,6 +103,7 @@ function delete_user_cards() {
 function load_user_cards() {
 	global $wpdb;
 	global $current_user;
+
 	$table       = $wpdb->prefix . 'bs_sponsor_cards';
 	$prepare_sql = $wpdb->prepare( "SELECT * FROM {$table} WHERE `sponsor_id`= %d ORDER BY id DESC", $current_user->ID );
 	$results     = $wpdb->get_results( $prepare_sql, OBJECT );
@@ -282,21 +320,39 @@ function update_protocol() {
 
 	wp_send_json_success( $task_id );
 }
+
 function save_protocol() {
 	global $wpdb;
+
 	$table_protocols              = $wpdb->prefix . 'bs_protocols';
 	$table_tasks                  = $wpdb->prefix . 'bs_tasks';
 	$protocol_array['title']      = get_request( 'protocol_name' ) ? sanitize_text_field( get_request( 'protocol_name' ) ) : null;
 	$protocol_array['sponsor_id'] = get_current_user_id();
 	$protocol_array['created_at'] = current_time( 'mysql', 1 );
-	$protocol_id                  = insert_form_data( $table_protocols, $protocol_array );
 
-	$task_array['task_code']   = json_encode( get_request( 'task_name' ) );
-	$task_array['protocol_id'] = $protocol_id;
-	$task_array['created_at']  = current_time( 'mysql', 1 );
-	$task_id                   = insert_form_data( $table_tasks, $task_array );
+	$entry = $wpdb->get_results( "SELECT * FROM {$table_protocols} WHERE `title` LIKE '{$protocol_array['title']}'" );
 
-	wp_send_json_success( $task_id );
+	if ( empty( $entry ) ) {
+
+		$protocol_id = insert_form_data( $table_protocols, $protocol_array );
+
+		$task_array['task_code']   = json_encode( get_request( 'task_name' ) );
+		$task_array['protocol_id'] = $protocol_id;
+		$task_array['created_at']  = current_time( 'mysql', 1 );
+		$task_id                   = insert_form_data( $table_tasks, $task_array );
+		$response                  = array(
+			'success' => true,
+			'task_id' => $task_id,
+			'message' => 'Successfully saved!',
+		);
+	} else {
+		$response = array(
+			'success' => false,
+			'message' => 'Protocol already exists!',
+		);
+	}
+
+	wp_send_json_success( $response );
 }
 
 function get_edit_data( $key ) {
@@ -306,6 +362,11 @@ function get_edit_data( $key ) {
 function get_fields( $table ) {
 	global $wpdb;
 	return $wpdb->get_results( "SELECT * FROM {$table}" );
+}
+
+function get_fields_by_user( $table, $user_id ) {
+	global $wpdb;
+	return $wpdb->get_results( "SELECT * FROM {$table} WHERE `sponsor_id` = {$user_id}" );
 }
 
 function get_field_by_id( $id, $table ) {

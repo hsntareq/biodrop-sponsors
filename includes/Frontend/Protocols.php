@@ -25,9 +25,12 @@ class Protocols {
 		} else {
 			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
 		} */
+		global $wp;
 		if ( is_user_logged_in() ) {
 			$admin_template = sponsor()->path . 'templates/page-admin.php';
-		} else {
+		} elseif ( $wp->request == 'bs-register' ) {
+				$admin_template = sponsor()->path . 'templates/page-register.php';
+		} elseif ( $wp->request == 'bs-login' ) {
 			$admin_template = sponsor()->path . 'templates/page-login.php';
 		}
 

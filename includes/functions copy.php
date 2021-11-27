@@ -1,5 +1,6 @@
 <?php
 
+add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
 function sponsor_no_admin_access() {
 	$redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
 	global $current_user;
@@ -8,12 +9,7 @@ function sponsor_no_admin_access() {
 	}
 }
 
-function current_username() {
-	global $current_user;
-	return $current_user->display_name;
-}
 
-add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
 
 add_action( 'init', 'sponsor_admin_access', 100 );
 function sponsor_admin_access() {
@@ -24,6 +20,10 @@ function sponsor_admin_access() {
 }
 
 
+function current_username() {
+	global $current_user;
+	return $current_user->display_name;
+}
 
 add_filter( 'template_include', 'sponsors_admin_page_template', 1000, 1 );
 function sponsors_admin_page_template( $template ) {

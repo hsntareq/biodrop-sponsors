@@ -9,7 +9,13 @@ document.addEventListener('readystatechange', event => {
   }
   else if (event.target.readyState === 'complete') {
     setTimeout(() => {
-      loadUserCards();
+      let page = new URL(window.location);
+      page = new URLSearchParams(page.search);
+      console.log(page.get('page'));
+      page = page.get('page') && page.get('page').replace('/', '');
+      if (page === 'settings') {
+        loadUserCards();
+      }
       ccEditFunction();
     }, 500)
   }
@@ -44,7 +50,6 @@ const loadUserCards = () => {
 
 
         } else {
-          console.log('nothing');
           if (null !== cardDataTable) {
             cardDataTable.style.display = 'none';
           }

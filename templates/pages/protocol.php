@@ -13,19 +13,21 @@
 	<p><?php echo esc_html( 'Set entry protocol requirements and thresholds' ); ?></p>
 </div>
 <form id="protocol_form">
+
 	<div class="bs-presets">
 		<?php
+		$user             = wp_get_current_user();
 		$table_protocols  = $wpdb->prefix . 'bs_protocols';
 		$table_tasks      = $wpdb->prefix . 'bs_tasks';
-		$protocols        = get_fields( $table_protocols );
-		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? sanitize_text_field( $_GET['edit'] ) : 0;
+		$protocols        = get_fields_by_user( $table_protocols, $user->ID );
+		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? esc_attr( wp_unslash( $_GET['edit'] ) ) : 0;
 		$field_label      = ! empty( get_edit_data( 'edit' ) ) ? 'Update Protocol' : 'Create Protocol';
 
 		if ( ! empty( $protocols ) ) {
 
 			foreach ( $protocols as $protocol ) {
-				if(isset( $_GET['edit'] ) && $protocol->id === $current_protocol){
-					$this_protocol =  $protocol;
+				if ( isset( $_GET['edit'] ) && $protocol->id === $current_protocol ) {
+					$this_protocol = $protocol;
 				}
 			}
 

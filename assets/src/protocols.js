@@ -88,28 +88,25 @@ if (protocolForm && createProtocol) {
             xhttp.open("POST", _appObject.ajaxUrl);
             xhttp.send(formData);
             xhttp.onreadystatechange = function () {
-                console.log("fasle");
                 if (xhttp.readyState === 4) {
                     console.log("not working");
-                    var getData = JSON.parse(xhttp.response);
-                    console.log(getData);
-                    // console.log(getData.success);
+                    var getData = JSON.parse(xhttp.response).data;
+
+                    setTimeout(() => {
+                        toggleClassSpinner(createProtocol);
+                    }, 500);
+
+
                     if (getData.success == false) {
                         toastTrigger("error", "This protocol already exists");
+                        return false;
                     } else {
                         toastTrigger("success", "The protocol created successfully");
                     }
-                    setTimeout(() => {
-                        toggleClassSpinner(createProtocol);
-                    }, 900);
 
                     const url = new URL(window.location);
-                    console.log(url.origin + url.pathname);
                     let page = url.searchParams.get("page");
-                    let nav = url.searchParams.get("nav");
-                    const params = new URLSearchParams({
-                        page: page,
-                    });
+                    const params = new URLSearchParams({ page: page });
                     const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
                     setTimeout(() => {
                         window.location = pushUrl;

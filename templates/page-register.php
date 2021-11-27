@@ -1,8 +1,48 @@
-<?php sp_header(); ?>
+<?php
+/**
+ * Template for sponsor registration.
+ */
+
+if ( isset( $_POST ) && ! empty( $_POST ) ) {
+	$reg_data     = array(
+		'user_pass'  => get_request( 'password' ),
+		'user_login' => get_request( 'username' ),
+		'user_email' => get_request( 'email' ),
+		'first_name' => get_request( 'first_name' ),
+		'last_name'  => get_request( 'last_name' ),
+	);
+	$reg_metadata = array(
+		'organization'  => sanitize_text_field( get_request( 'organization' ) ),
+		'address'       => sanitize_textarea_field( get_request( 'address' ) ),
+		'address_2'     => sanitize_textarea_field( get_request( 'address_2' ) ),
+		'sponsor_city'  => sanitize_text_field( get_request( 'city' ) ),
+		'sponsor_state' => sanitize_text_field( get_request( 'state' ) ),
+		'sponsor_zip'   => sanitize_text_field( get_request( 'zip' ) ),
+
+	);
+	$user_id = wp_insert_user( $reg_data );
+
+	// On success.
+	if ( ! is_wp_error( $user_id ) ) {
+		wp_update_user(
+			array(
+				'ID'   => $user_id,
+				'role' => 'sponsor',
+			)
+		);
+
+		$user = get_userdata( $user_id );
+
+		pr( $user );
+	}
+	$sponsor_role = get_role( 'sponsor' );
+}
+
+sp_header(); ?>
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-8">
-				<div class="sp-login mt-5 p-5 text-white">
+				<div class="sp-register mt-5 p-5 text-center text-white shadow bg-opacity-75 bg-dark">
 					<div class="text-center mb-5">
 						<img class="app-logo" src="<?php echo sponsor()->url . 'assets/images/logo.png'; ?>" alt="logo-app">
 						<h3 class="mb-3">Register to Sponsor's Portal</h3>
@@ -55,10 +95,12 @@
 							<input type="text" class="form-control rounded shadow-sm border-0" name="zip" id="zip" placeholder="Type your zip" autocomplete="off">
 						</div>
 						<div class="col-12 mt-5">
-							<button type="submit" class="btn btn-primary bg-primary shadow">Register Sponsor</button>
-							<a href="<?php echo site_url( 'bs-login' ); ?>" class="btn btn-primary bg-primary shadow">
-								Log in
-							</a>
+							<p><button type="submit" class="btn btn-primary bg-primary shadow">Register Sponsor</button></p>
+							<p>OR</p>
+							<p>
+							Click <a href="<?php echo site_url( 'bs-login' ); ?>" class="">
+								here
+							</a> to login to the Sponsor's Portal </p>
 						</div>
 					</form>
 				</div>

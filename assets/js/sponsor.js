@@ -3224,26 +3224,22 @@ if (protocolForm && createProtocol) {
       xhttp.send(formData);
 
       xhttp.onreadystatechange = function () {
-        console.log("fasle");
-
         if (xhttp.readyState === 4) {
           console.log("not working");
-          var getData = JSON.parse(xhttp.response);
-          console.log(getData); // console.log(getData.success);
+          var getData = JSON.parse(xhttp.response).data;
+          setTimeout(() => {
+            toggleClassSpinner(createProtocol);
+          }, 500);
 
           if (getData.success == false) {
             (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)("error", "This protocol already exists");
+            return false;
           } else {
             (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)("success", "The protocol created successfully");
           }
 
-          setTimeout(() => {
-            toggleClassSpinner(createProtocol);
-          }, 900);
           const url = new URL(window.location);
-          console.log(url.origin + url.pathname);
           let page = url.searchParams.get("page");
-          let nav = url.searchParams.get("nav");
           const params = new URLSearchParams({
             page: page
           });
@@ -3450,7 +3446,15 @@ document.addEventListener('readystatechange', event => {
   if (event.target.readyState === 'interactive') {// console.log('init');
   } else if (event.target.readyState === 'complete') {
     setTimeout(() => {
-      loadUserCards();
+      let page = new URL(window.location);
+      page = new URLSearchParams(page.search);
+      console.log(page.get('page'));
+      page = page.get('page') && page.get('page').replace('/', '');
+
+      if (page === 'settings') {
+        loadUserCards();
+      }
+
       ccEditFunction();
     }, 500);
   }
@@ -3483,8 +3487,6 @@ const loadUserCards = () => {
             cardDataTable.style.display = 'table';
           }
         } else {
-          console.log('nothing');
-
           if (null !== cardDataTable) {
             cardDataTable.style.display = 'none';
           }
