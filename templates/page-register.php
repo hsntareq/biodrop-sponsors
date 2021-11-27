@@ -33,7 +33,7 @@ if ( isset( $_POST ) && ! empty( $_POST ) ) {
 
 		$user = get_userdata( $user_id );
 
-		pr( $user );
+		wp_redirect( home_url( 'bs-login' ) );
 	}
 	$sponsor_role = get_role( 'sponsor' );
 }

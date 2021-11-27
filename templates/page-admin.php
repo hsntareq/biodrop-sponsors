@@ -38,7 +38,7 @@
 										<i class="far fa-cog"></i>
 										<?php echo esc_html( 'Settings' ); ?>
 									</a>
-									<a href="<?php echo esc_url( wp_logout_url( esc_url( get_current_url() ) ) ); ?>"
+									<a href="<?php echo esc_url( wp_logout_url( home_url( 'bs-login' ) ) ); ?>"
 										class="list-group-item list-group-item-action<?php echo esc_attr( get_active( 'logout' ) ); ?>">
 										<i class="fas fa-sign-out-alt"></i>
 										<?php echo esc_html( 'Logout' ); ?>

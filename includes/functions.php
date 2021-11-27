@@ -13,15 +13,30 @@ add_action( 'wp_ajax_edit_user_cards', 'edit_user_cards' );
 add_filter( 'wp_title', 'biodrop_page_title', 10000, 2 );
 add_action( 'init', 'sponsor_admin_access', 100 );
 add_filter( 'status_header', 'bs_status_header_function', 10, 2 );
-// add_action( 'admin_init', 'sponsor_no_admin_access', 100 );
+add_action( 'init', 'sponsor_no_admin_access', 100 );
 
 
 function sponsor_no_admin_access() {
-	$redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
+	if ( is_404() ) {
+		die;
+		wp_safe_redirect( home_url( 'bs-login' ) );
+	}
+
+	global $wp;
+	if ( ! is_user_logged_in() ) {
+		wp_redirect( site_url( 'bs-login' ) );
+	}
+	$allowed_urls = array( 'bs-login', 'bs-register' );
+	if ( ! in_array( $wp->request, $allowed_urls ) ) {
+		wp_redirect( site_url( 'bs-login' ) );
+	}
+
+	/*
+	 $redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
 	global $current_user;
 	if ( in_array( 'sponsor', $current_user->roles ) ) {
 		exit( wp_redirect( $redirect ) );
-	}
+	} */
 }
 
 
@@ -31,6 +46,7 @@ function sponsors_admin_page_template( $template ) {
 	if ( is_user_logged_in() ) {
 		$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
 	} else {
+
 		$allowed_urls = array( 'bs-login', 'bs-register' );
 		if ( ! in_array( $wp->request, $allowed_urls ) ) {
 			wp_redirect( site_url( 'bs-login' ) );
@@ -266,7 +282,6 @@ function add_credit_card_action() {
 
 function sponsor_admin_access() {
 	global $current_user;
-
 	if ( in_array( 'sponsor', $current_user->roles ) ) {
 		add_filter( 'show_admin_bar', '__return_false' );
 	}
