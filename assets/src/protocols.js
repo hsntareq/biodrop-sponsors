@@ -115,7 +115,7 @@ if (protocolForm && createProtocol) {
                     const params = new URLSearchParams({ page: page });
                     const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
                     setTimeout(() => {
-                        // window.location = pushUrl;
+                        window.location = pushUrl;
                     }, 1000);
                 }
             };

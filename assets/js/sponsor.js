@@ -3249,7 +3249,8 @@ if (protocolForm && createProtocol) {
             page: page
           });
           const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
-          setTimeout(() => {// window.location = pushUrl;
+          setTimeout(() => {
+            window.location = pushUrl;
           }, 1000);
         }
       };
