@@ -3215,7 +3215,6 @@ if (protocolForm && createProtocol) {
     protocolForm.onsubmit = e => {
       e.preventDefault();
       toggleClassSpinner(createProtocol);
-      console.log(12);
       var formData = new FormData(protocolForm);
       formData.append("action", "save_protocol");
       formData.append(_appObject.nonce_key, _appObject._sponsor_nonce);

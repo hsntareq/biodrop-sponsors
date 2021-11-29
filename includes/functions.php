@@ -379,7 +379,7 @@ function save_protocol() {
 	$table_protocols              = $wpdb->prefix . 'bs_protocols';
 	$table_tasks                  = $wpdb->prefix . 'bs_tasks';
 	$protocol_array['title']      = get_request( 'protocol_name' ) ? sanitize_text_field( get_request( 'protocol_name' ) ) : '';
-	$protocol_array['task_name']  = get_request( 'task_name' ) ? get_request( 'task_name' ) : array();
+	$task_name                    = get_request( 'task_name' ) ? get_request( 'task_name' ) : array();
 	$protocol_array['sponsor_id'] = get_current_user_id();
 	$protocol_array['created_at'] = current_time( 'mysql', 1 );
 	$empty_fields                 = array();
@@ -387,7 +387,7 @@ function save_protocol() {
 	if ( empty( $protocol_array['title'] ) ) {
 		$empty_fields['protocol_name'] = esc_attr( 'Protocol Name' );
 	}
-	if ( empty( $protocol_array['task_name'] ) ) {
+	if ( empty( $task_name ) ) {
 		$empty_fields['task_name'] = esc_attr( 'Task name' );
 	}
 
@@ -404,6 +404,7 @@ function save_protocol() {
 		if ( empty( $entry ) ) {
 
 			$protocol_id = insert_form_data( $table_protocols, $protocol_array );
+
 			if ( $protocol_id ) {
 				$task_array['task_code']   = json_encode( $protocol_array['task_name'] );
 				$task_array['protocol_id'] = $protocol_id;
