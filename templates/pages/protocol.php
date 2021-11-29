@@ -20,9 +20,8 @@
 		$table_protocols  = $wpdb->prefix . 'bs_protocols';
 		$table_tasks      = $wpdb->prefix . 'bs_tasks';
 		$protocols        = get_fields_by_user( $table_protocols, $user->ID );
-		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? esc_attr( wp_unslash( $_GET['edit'] ) ) : 0;
+		$current_protocol = isset( $_GET['edit'] ) && null !== $_GET['edit'] ? esc_attr( $_GET['edit'] ) : 0;
 		$field_label      = ! empty( get_edit_data( 'edit' ) ) ? 'Update Protocol' : 'Create Protocol';
-
 		if ( ! empty( $protocols ) ) {
 
 			foreach ( $protocols as $protocol ) {

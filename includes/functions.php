@@ -406,7 +406,7 @@ function save_protocol() {
 			$protocol_id = insert_form_data( $table_protocols, $protocol_array );
 
 			if ( $protocol_id ) {
-				$task_array['task_code']   = json_encode( $protocol_array['task_name'] );
+				$task_array['task_code']   = json_encode( $task_name );
 				$task_array['protocol_id'] = $protocol_id;
 				$task_array['created_at']  = current_time( 'mysql', 1 );
 				$task_id                   = insert_form_data( $table_tasks, $task_array );
