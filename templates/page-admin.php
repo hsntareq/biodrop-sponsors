@@ -51,27 +51,31 @@
 							<div class="content-area">
 
 							<?php
-							switch ( get_request( 'page' ) ) {
-								case null:
-									include __DIR__ . '/pages/welcome.php';
-									break;
+							if ( 'bs-admin' !== $wp->request ) {
+								include __DIR__ . '/pages/404.php';
+							} else {
+								switch ( get_request( 'page' ) ) {
+									case null:
+										include __DIR__ . '/pages/welcome.php';
+										break;
 
-								case 'entry':
-									include __DIR__ . '/pages/entry.php';
-									break;
+									case 'entry':
+										include __DIR__ . '/pages/entry.php';
+										break;
 
-								case 'users':
-									include __DIR__ . '/pages/users.php';
-									break;
-								case 'protocol':
-									include __DIR__ . '/pages/protocol.php';
-									break;
-								case 'settings':
-									include __DIR__ . '/pages/settings.php';
-									break;
-								default:
-									include __DIR__ . '/pages/404.php';
-									break;
+									case 'users':
+										include __DIR__ . '/pages/users.php';
+										break;
+									case 'protocol':
+										include __DIR__ . '/pages/protocol.php';
+										break;
+									case 'settings':
+										include __DIR__ . '/pages/settings.php';
+										break;
+									default:
+										include __DIR__ . '/pages/404.php';
+										break;
+								}
 							}
 							?>
 							</div>

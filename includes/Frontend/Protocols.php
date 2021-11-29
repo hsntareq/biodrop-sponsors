@@ -19,7 +19,7 @@ class Protocols {
 
 	function sponsors_admin_page_template( $template ) {
 		/*
-		 pr( $wp );
+		pr( $wp );
 		if ( is_user_logged_in() ) {
 			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
 		} else {

@@ -18,25 +18,26 @@ add_action( 'init', 'sponsor_no_admin_access', 100 );
 
 function sponsor_no_admin_access() {
 	if ( is_404() ) {
-		die;
 		wp_safe_redirect( home_url( 'bs-login' ) );
 	}
 
 	global $wp;
-	if ( ! is_user_logged_in() ) {
-		wp_redirect( site_url( 'bs-login' ) );
-	}
-	$allowed_urls = array( 'bs-login', 'bs-register' );
-	if ( ! in_array( $wp->request, $allowed_urls ) ) {
-		wp_redirect( site_url( 'bs-login' ) );
-	}
-
-	/*
-	 $redirect = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : home_url( '/bs-admin' );
 	global $current_user;
-	if ( in_array( 'sponsor', $current_user->roles ) ) {
-		exit( wp_redirect( $redirect ) );
-	} */
+	if ( ! is_user_logged_in() ) {
+		wp_safe_redirect( site_url( 'bs-login' ) );
+	} else {
+
+		$allowed_roles = array( 'sponsor' );
+		$role_exists   = array_intersect( $allowed_roles, $current_user->roles );
+
+		if ( ! empty( $role_exists ) && ! defined( 'DOING_AJAX' ) ) {
+			if ( 'bs-admin' !== $wp->request ) {
+				wp_safe_redirect( site_url( 'bs-admin' ) );
+			} else {
+				wp_safe_redirect( site_url( 'bs-login' ) );
+			}
+		}
+	}
 }
 
 
@@ -341,33 +342,53 @@ function save_protocol() {
 
 	$table_protocols              = $wpdb->prefix . 'bs_protocols';
 	$table_tasks                  = $wpdb->prefix . 'bs_tasks';
-	$protocol_array['title']      = get_request( 'protocol_name' ) ? sanitize_text_field( get_request( 'protocol_name' ) ) : null;
+	$protocol_array['title']      = get_request( 'protocol_name' ) ? sanitize_text_field( get_request( 'protocol_name' ) ) : '';
+	$protocol_array['task_name']  = get_request( 'task_name' ) ? get_request( 'task_name' ) : array();
 	$protocol_array['sponsor_id'] = get_current_user_id();
 	$protocol_array['created_at'] = current_time( 'mysql', 1 );
+	$empty_fields                 = array();
 
-	$entry = $wpdb->get_results( "SELECT * FROM {$table_protocols} WHERE `title` LIKE '{$protocol_array['title']}'" );
-
-	if ( empty( $entry ) ) {
-
-		$protocol_id = insert_form_data( $table_protocols, $protocol_array );
-
-		$task_array['task_code']   = json_encode( get_request( 'task_name' ) );
-		$task_array['protocol_id'] = $protocol_id;
-		$task_array['created_at']  = current_time( 'mysql', 1 );
-		$task_id                   = insert_form_data( $table_tasks, $task_array );
-		$response                  = array(
-			'success' => true,
-			'task_id' => $task_id,
-			'message' => 'Successfully saved!',
-		);
-	} else {
-		$response = array(
-			'success' => false,
-			'message' => 'Protocol already exists!',
-		);
+	if ( empty( $protocol_array['title'] ) ) {
+		$empty_fields['protocol_name'] = esc_attr( 'Protocol Name' );
+	}
+	if ( empty( $protocol_array['task_name'] ) ) {
+		$empty_fields['task_name'] = esc_attr( 'Task name' );
 	}
 
+	if ( ! empty( $empty_fields ) ) {
+		$response = array(
+			'status'  => 'missing',
+			'fields'  => $empty_fields,
+			'message' => 'Field missing!',
+		);
+	} else {
+
+		$entry = $wpdb->get_results( "SELECT * FROM {$table_protocols} WHERE `title` LIKE '{$protocol_array['title']}'" );
+
+		if ( empty( $entry ) ) {
+
+			$protocol_id = insert_form_data( $table_protocols, $protocol_array );
+			if ( $protocol_id ) {
+				$task_array['task_code']   = json_encode( $protocol_array['task_name'] );
+				$task_array['protocol_id'] = $protocol_id;
+				$task_array['created_at']  = current_time( 'mysql', 1 );
+				$task_id                   = insert_form_data( $table_tasks, $task_array );
+				$response                  = array(
+					'status'  => 'success',
+					'task_id' => $task_id,
+					'message' => 'Successfully saved!',
+				);
+			}
+		} else {
+			$response = array(
+				'status'  => 'exists',
+				'title'   => $protocol_array['title'],
+				'message' => 'Protocol exists!',
+			);
+		}
+	}
 	wp_send_json_success( $response );
+
 }
 
 function get_edit_data( $key ) {

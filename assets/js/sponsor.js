@@ -3230,12 +3230,17 @@ if (protocolForm && createProtocol) {
           setTimeout(() => {
             toggleClassSpinner(createProtocol);
           }, 500);
+          console.log(getData);
 
-          if (getData.success == false) {
-            (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)("error", "This protocol already exists");
+          if (getData.status == 'exists') {
+            (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)(getData.message, `Protocol "${getData.title}" already exists`);
             return false;
-          } else {
-            (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)("success", "The protocol created successfully");
+          } else if (getData.status == 'missing') {
+            console.log(getData);
+            (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)(getData.message, Object.values(getData.fields) + " field(s) can not leave empty");
+            return false;
+          } else if (getData.status == 'success') {
+            (0,_lib__WEBPACK_IMPORTED_MODULE_0__.toastTrigger)(getData.message, "The protocol created successfully");
           }
 
           const url = new URL(window.location);
@@ -3244,8 +3249,7 @@ if (protocolForm && createProtocol) {
             page: page
           });
           const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
-          setTimeout(() => {
-            window.location = pushUrl;
+          setTimeout(() => {// window.location = pushUrl;
           }, 1000);
         }
       };
@@ -3448,7 +3452,6 @@ document.addEventListener('readystatechange', event => {
     setTimeout(() => {
       let page = new URL(window.location);
       page = new URLSearchParams(page.search);
-      console.log(page.get('page'));
       page = page.get('page') && page.get('page').replace('/', '');
 
       if (page === 'settings') {
@@ -3584,7 +3587,6 @@ if (null !== creditCardForm) {
 
         if ('exist' == getData.status) {
           (0,_lib__WEBPACK_IMPORTED_MODULE_1__.toastTrigger)('warning', 'This Card Number already exist!');
-          console.log(getData);
         }
 
         loadUserCards();
@@ -3602,7 +3604,6 @@ const ccDeleteFunction = () => {
   const ccDeleteBtn = document.querySelectorAll('.cc_delete_btn');
   ccDeleteBtn.forEach(item => {
     item.onclick = e => {
-      console.log(item);
       var formData = new FormData();
       formData.append("action", "delete_user_cards");
       formData.append("cc_id", item.dataset.id);
@@ -3655,7 +3656,6 @@ const ccEditFunction = () => {
 const loadSingleCard = getData => {
   let editData = getData.data.shift();
   creditCardForm.dataset.card_id = editData.id;
-  console.log(editData);
   let cardData = [];
   cardData['card_number'] = editData.card_number;
   cardData['expiration_date'] = editData.card_expiration_month + '/' + editData.card_expiration_year;

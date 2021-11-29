@@ -92,16 +92,22 @@ if (protocolForm && createProtocol) {
                     console.log("not working");
                     var getData = JSON.parse(xhttp.response).data;
 
+
                     setTimeout(() => {
                         toggleClassSpinner(createProtocol);
                     }, 500);
 
 
-                    if (getData.success == false) {
-                        toastTrigger("error", "This protocol already exists");
+                    console.log(getData);
+                    if (getData.status == 'exists') {
+                        toastTrigger(getData.message, `Protocol "${getData.title}" already exists`);
                         return false;
-                    } else {
-                        toastTrigger("success", "The protocol created successfully");
+                    } else if (getData.status == 'missing') {
+                        console.log(getData);
+                        toastTrigger(getData.message, Object.values(getData.fields) + " field(s) can not leave empty");
+                        return false;
+                    } else if (getData.status == 'success') {
+                        toastTrigger(getData.message, "The protocol created successfully");
                     }
 
                     const url = new URL(window.location);
@@ -109,7 +115,7 @@ if (protocolForm && createProtocol) {
                     const params = new URLSearchParams({ page: page });
                     const pushUrl = `${url.origin + url.pathname}?${params.toString()}`;
                     setTimeout(() => {
-                        window.location = pushUrl;
+                        // window.location = pushUrl;
                     }, 1000);
                 }
             };
