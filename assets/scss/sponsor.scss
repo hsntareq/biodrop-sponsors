@@ -6,7 +6,7 @@ html {
 }
 body {
   height: 100%;
-  // overflow: hidden;
+  overflow: hidden;
 }
 body.is_admin_bar {
   height: calc(100% - 32px);

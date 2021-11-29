@@ -14,6 +14,42 @@ add_filter( 'wp_title', 'biodrop_page_title', 10000, 2 );
 add_action( 'init', 'sponsor_admin_access', 100 );
 add_filter( 'status_header', 'bs_status_header_function', 10, 2 );
 add_action( 'init', 'sponsor_no_admin_access', 100 );
+add_action( 'init', 'create_bs_admin_page' );
+
+
+
+function create_bs_admin_page() {
+	$page_slug  = 'bs-admin';
+	$admin_page = get_posts(
+		array(
+			'name'        => $page_slug,
+			'post_type'   => 'page',
+			'post_status' => 'draft',
+		)
+	);
+	if ( empty( $admin_page ) ) {
+		$page = array_shift( $admin_page );
+
+		wp_update_post(
+			array(
+				'ID'          => $page->ID,
+				'post_status' => 'draft',
+			)
+		);
+	}
+
+	if ( false == get_page_by_path( $page_slug ) ) {
+		wp_insert_post(
+			array(
+				'post_title'   => 'Biodrop Admin',
+				'post_content' => 'Biodrop Sponsor\'s Admin Page',
+				'post_status'  => 'draft',
+				'post_type'    => 'page',
+				'post_name'    => $page_slug,
+			)
+		);
+	}
+}
 
 
 function sponsor_no_admin_access() {
