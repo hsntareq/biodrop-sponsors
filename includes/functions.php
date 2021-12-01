@@ -53,14 +53,21 @@ function create_bs_admin_page() {
 
 
 function sponsor_no_admin_access() {
-	if ( is_404() ) {
-		wp_safe_redirect( home_url( 'bs-login' ) );
-	}
+	// if ( is_404() ) {
+	// wp_safe_redirect( home_url( 'bs-login' ) );
+	// }
 
 	global $wp;
 	global $current_user;
+	$page_slug = trim( $_SERVER['REQUEST_URI'], '/' );
 	if ( ! is_user_logged_in() ) {
-		wp_safe_redirect( site_url( 'bs-login' ) );
+		if ( 'bs-admin' == $page_slug ) {
+			wp_safe_redirect( site_url( 'bs-login' ) );
+			exit;
+		}
+		if ( 'bs-login' !== $page_slug ) {
+			wp_safe_redirect( site_url( 'bs-login' ) );
+		}
 	} else {
 
 		$allowed_roles = array( 'sponsor' );
@@ -319,6 +326,7 @@ function add_credit_card_action() {
 
 function sponsor_admin_access() {
 	global $current_user;
+	// pr( $current_user );
 	if ( in_array( 'sponsor', $current_user->roles ) ) {
 		add_filter( 'show_admin_bar', '__return_false' );
 	}
