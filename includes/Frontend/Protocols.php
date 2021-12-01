@@ -18,13 +18,6 @@ class Protocols {
 	}
 
 	function sponsors_admin_page_template( $template ) {
-		/*
-		pr( $wp );
-		if ( is_user_logged_in() ) {
-			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-admin.php';
-		} else {
-			$admin_template = plugin_dir_path( __FILE__ ) . 'templates/page-login.php';
-		} */
 		global $wp;
 		if ( is_user_logged_in() ) {
 			$admin_template = sponsor()->path . 'templates/page-admin.php';

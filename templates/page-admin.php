@@ -52,7 +52,7 @@
 
 							<?php
 							if ( 'bs-admin' !== $wp->request ) {
-								include __DIR__ . '/pages/404.php';
+								include __DIR__ . '/pages/welcome.php';
 							} else {
 								switch ( get_request( 'page' ) ) {
 									case null:

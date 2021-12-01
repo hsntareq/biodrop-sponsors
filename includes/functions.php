@@ -69,7 +69,6 @@ function sponsor_no_admin_access() {
 			wp_safe_redirect( site_url( 'bs-login' ) );
 		}
 	} else {
-
 		$allowed_roles = array( 'sponsor' );
 		$role_exists   = array_intersect( $allowed_roles, $current_user->roles );
 
