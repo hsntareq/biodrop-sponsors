@@ -16,7 +16,30 @@ add_filter( 'status_header', 'bs_status_header_function', 10, 2 );
 add_action( 'init', 'sponsor_no_admin_access', 100 );
 add_action( 'init', 'create_bs_admin_page' );
 
+function biodrop_login_action() {
+	if ( isset( $_POST['wp-submit'] ) ) {
 
+		$login_data                  = array();
+		$login_data['user_login']    = sanitize_user( $_POST['log'] );
+		$login_data['user_password'] = esc_attr( $_POST['pwd'] );
+
+		$user = wp_signon( $login_data, false );
+
+		if ( is_wp_error( $user ) ) {
+			session_start();
+			$_SESSION['authlog'] = $user->get_error_message();
+		} else {
+			wp_clear_auth_cookie();
+			do_action( 'wp_login', $user->ID );
+			wp_set_current_user( $user->ID );
+			wp_set_auth_cookie( $user->ID, true );
+			wp_safe_redirect( home_url( 'bs-admin' ) );
+			exit;
+		}
+	}
+}
+
+add_action( 'after_setup_theme', 'biodrop_login_action' );
 
 function create_bs_admin_page() {
 	$page_slug  = 'bs-admin';
@@ -57,9 +80,11 @@ function sponsor_no_admin_access() {
 	global $current_user;
 	$allowed_pages = array( 'bs-register', 'bs-login' );
 	$page_slug     = trim( $_SERVER['REQUEST_URI'], '/' );
-	if ( ! is_user_logged_in() && ! in_array( $page_slug, $allowed_pages ) ) {
-		wp_safe_redirect( site_url( 'bs-login' ) );
-		exit;
+	if ( ! is_user_logged_in() ) {
+		if ( ! in_array( $page_slug, $allowed_pages ) ) {
+			wp_safe_redirect( site_url( 'bs-login' ) );
+			exit;
+		}
 	} else {
 		$allowed_roles = array( 'sponsor' );
 		$role_exists   = array_intersect( $allowed_roles, $current_user->roles );

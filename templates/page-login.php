@@ -2,10 +2,20 @@
 	<div class="container">
 		<div class="row justify-content-center">
 			<div class="col-md-6">
+
+			<?php
+			if ( isset( $_SESSION['authlog'] ) && ! empty( $_SESSION['authlog'] ) ) {
+				echo '<div class="alert alert-warning mt-5 alert-dismissible fade show" role="alert">' . $_SESSION['authlog'] . '
+				<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>';
+				$_SESSION['authlog'] = '';
+			}
+			?>
+
 				<div class="sp-login mt-5 p-5 text-center text-white shadow bg-opacity-75 bg-dark">
 					<img class="app-logo" src="<?php echo sponsor()->url . 'assets/images/logo-app.png'; ?>" alt="logo-app">
 					<h4 class="mb-4 text-shadow">Login to <br> Sponsor's Portal</h4>
-					<form name="loginform" id="loginform" action="<?php echo wp_login_url(); ?>" method="post">
+					<form name="loginform" id="loginform" action="<?php // echo wp_login_url(); ?>" method="post">
 						<input type="hidden" name="redirect_to" value="<?php echo site_url( 'bs-admin' ); ?>">
 						<input type="hidden" name="testcookie" value="1">
 						<div class="mb-4">
